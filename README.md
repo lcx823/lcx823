@@ -1,5 +1,4 @@
-## Hi there 👋
-![Typing SVG](https://readme-typing-svg.demolab.com/?lines=向前走,别回头)
+![Typing SVG](https://readme-typing-svg.demolab.com/?lines=where possible begins?)
 
 
 <!--
