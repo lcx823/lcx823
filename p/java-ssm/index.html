@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="java全栈体系-星云 著作权归 @星云系 所有。 链接：https://blog.xygalaxy.com/\nSpring概览 容器框架 Spring 是一个容器，用于存放java对象 Spring容器可以管理对象的创建和对象之间的关系 从容器中获取要使用的对象 优势与特性 轻量级：Spring 框架相比于 EJB 和其他重量级框架，轻量级许多，不需要过多的资源消耗。\n">
+<title>Java SSM</title>
+
+<link rel='canonical' href='https://lcx823.github.io/lcx823/p/java-ssm/'>
+
+<link rel="stylesheet" href="/lcx823/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Java SSM">
+<meta property='og:description' content="java全栈体系-星云 著作权归 @星云系 所有。 链接：https://blog.xygalaxy.com/\nSpring概览 容器框架 Spring 是一个容器，用于存放java对象 Spring容器可以管理对象的创建和对象之间的关系 从容器中获取要使用的对象 优势与特性 轻量级：Spring 框架相比于 EJB 和其他重量级框架，轻量级许多，不需要过多的资源消耗。\n">
+<meta property='og:url' content='https://lcx823.github.io/lcx823/p/java-ssm/'>
+<meta property='og:site_name' content='yyy'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-02-20T20:50:54&#43;08:00'/><meta property='article:modified_time' content='2025-02-20T20:50:54&#43;08:00'/>
+<meta name="twitter:title" content="Java SSM">
+<meta name="twitter:description" content="java全栈体系-星云 著作权归 @星云系 所有。 链接：https://blog.xygalaxy.com/\nSpring概览 容器框架 Spring 是一个容器，用于存放java对象 Spring容器可以管理对象的创建和对象之间的关系 从容器中获取要使用的对象 优势与特性 轻量级：Spring 框架相比于 EJB 和其他重量级框架，轻量级许多，不需要过多的资源消耗。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/lcx823/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/lcx823/img/avatar_hu_84743d20417ec9a6.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😉</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/lcx823">yyy</a></h1>
+            <h2 class="site-description">演示说明</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/3494362409339008'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="Bilibili--Streamline-Font-Awesome" height="16" width="16"><desc>Bilibili Streamline Icon: https://streamlinehq.com</desc><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M15.123284375 4.0830875c0.511434375 0.55430625 0.747246875 1.215803125 0.713559375 2.01205v6.1984625c-0.01225 0.80849375 -0.28175 1.473053125 -0.811559375 1.993675 -0.526746875 0.520621875 -1.197428125 0.79318125 -2.005925 0.81768125H2.978096875c-0.810028125 -0.0245 -1.476425 -0.300121875 -1.999190625 -0.83299375C0.456509375 13.739090625 0.18348125 13.03778125 0.16 12.1711V6.0951375c0.02348125 -0.796246875 0.296509375 -1.45774375 0.81890625 -2.01205 0.522765625 -0.50071875 1.1891625 -0.775728125 1.999190625 -0.799309375h0.89975625L3.1015125 2.493353125c-0.176090625 -0.17548125 -0.264290625 -0.398125 -0.264290625 -0.667315625 0 -0.2695 0.0882 -0.491834375 0.264290625 -0.667528125 0.17609375 -0.175634375 0.39965625 -0.263465625 0.669153125 -0.263465625s0.493059375 0.08783125 0.670684375 0.263465625l2.2448 2.12526875h2.69498125l2.28155 -2.12526875c0.1868125 -0.175634375 0.416496875 -0.263465625 0.685996875 -0.263465625 0.269496875 0 0.493059375 0.08783125 0.67068125 0.263465625 0.1745625 0.17569375 0.263375 0.398028125 0.263375 0.667528125 0 0.269190625 -0.0888125 0.491834375 -0.263375 0.667315625l-0.77480625 0.790425h0.89730625c0.808496875 0.02358125 1.469990625 0.298590625 1.981425 0.799309375Zm-1.188240625 2.134546875c-0.01225 -0.293996875 -0.1133125 -0.532871875 -0.3276875 -0.71968125 -0.15925 -0.1868125 -0.428746875 -0.287875 -0.695184375 -0.300125H3.1015125c-0.293690625 0.01225 -0.534403125 0.1133125 -0.72213125 0.300125 -0.1880375 0.186809375 -0.287875 0.425684375 -0.2995125 0.71968125v5.953465625c0 0.28175 0.0998375 0.520621875 0.2995125 0.719684375s0.440384375 0.300121875 0.72213125 0.300121875h9.8106625c0.281746875 0 0.520621875 -0.1010625 0.71355625 -0.300121875 0.1929375 -0.1990625 0.2970625 -0.4379375 0.3093125 -0.719684375V6.217634375Zm-8.094140625 1.30768125c0.1929375 0.1929375 0.2970625 0.431809375 0.3093125 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300125 0.71049375 -0.189871875 0.1929375 -0.428746875 0.2909375 -0.72274375 0.2909375 -0.294 0 -0.535934375 -0.098 -0.722746875 -0.2909375 -0.1868125 -0.192934375 -0.287871875 -0.428746875 -0.300121875 -0.71049375V8.2358125c0.01225 -0.2786875 0.116371875 -0.517559375 0.309309375 -0.710496875 0.1929375 -0.1929375 0.404246875 -0.293996875 0.713559375 -0.306246875 0.281746875 0.01225 0.520621875 0.113309375 0.71355625 0.306246875Zm5.864653125 0c0.192934375 0.1929375 0.297059375 0.431809375 0.309309375 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300121875 0.71049375 -0.1868125 0.1929375 -0.428746875 0.2909375 -0.722746875 0.2909375 -0.293996875 0 -0.532871875 -0.098 -0.72274375 -0.2909375 -0.214375 -0.192934375 -0.287875 -0.428746875 -0.2970625 -0.71049375V8.2358125c0.0091875 -0.2786875 0.1133125 -0.517559375 0.30625 -0.710496875 0.192934375 -0.1929375 0.431809375 -0.293996875 0.71355625 -0.306246875 0.28175 0.01225 0.520621875 0.113309375 0.713559375 0.306246875Z" fill="#000000" stroke-width="0.0313"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/lcx823/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#spring概览">Spring概览</a>
+      <ol>
+        <li><a href="#容器框架">容器框架</a></li>
+        <li><a href="#优势与特性">优势与特性</a></li>
+      </ol>
+    </li>
+    <li><a href="#ioc控制反转与di依赖注入">IOC控制反转与DI依赖注入</a>
+      <ol>
+        <li><a href="#ioc理解">IOC理解</a></li>
+        <li><a href="#spring-bean">Spring Bean</a>
+          <ol>
+            <li><a href="#bean的装配">Bean的装配</a></li>
+            <li><a href="#bean的装配策略">Bean的装配策略</a></li>
+          </ol>
+        </li>
+        <li><a href="#di理解">DI理解</a>
+          <ol>
+            <li><a href="#di注入">DI注入</a></li>
+          </ol>
+        </li>
+        <li><a href="#aop面向切面编程">AOP面向切面编程</a></li>
+        <li><a href="#spring框架配置简化过程">Spring框架配置简化过程</a>
+          <ol>
+            <li><a href="#xml配置">XML配置</a></li>
+            <li><a href="#java配置">java配置</a></li>
+            <li><a href="#注解配置">注解配置</a></li>
+            <li><a href="#springboot托管配置">SpringBoot托管配置</a></li>
+          </ol>
+        </li>
+        <li><a href="#spring事务">Spring事务</a>
+          <ol>
+            <li><a href="#编程式">编程式</a></li>
+            <li><a href="#声明式">声明式</a></li>
+          </ol>
+        </li>
+        <li><a href="#spring-mvc">Spring MVC</a></li>
+        <li><a href="#mybatis">mybatis</a></li>
+        <li><a href="#mybatisplus">mybatisplus</a></li>
+        <li><a href="#ssm">ssm</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/lcx823/p/java-ssm/">Java SSM</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-02-20</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="java全栈体系-星云">java全栈体系-星云
+</h1><p>著作权归 @星云系 所有。 链接：https://blog.xygalaxy.com/</p>
+<h2 id="spring概览">Spring概览
+</h2><h3 id="容器框架">容器框架
+</h3><ul>
+<li>Spring 是一个容器，用于存放java对象</li>
+<li>Spring容器可以管理对象的创建和对象之间的关系</li>
+<li>从容器中获取要使用的对象</li>
+</ul>
+<h3 id="优势与特性">优势与特性
+</h3><p><strong>轻量级</strong>：Spring 框架相比于 EJB 和其他重量级框架，轻量级许多，不需要过多的资源消耗。</p>
+<p><strong>控制反转（IOC）</strong>：Spring 框架通过 IoC 实现了对象的创建和管理，解耦了对象与对象之间的依赖关系。</p>
+<p><strong>依赖注入（DI）</strong>：Spring 框架通过 DI 提供了对象之间的依赖关系，使得对象更加独立，组织起来更有序。</p>
+<p><strong>面向切面编程（AOP）</strong>：Spring 框架的 AOP 模块直接将面向切面编程集成到了 Spring 容器中，能够方便地解决业务处理中的横切问题。</p>
+<p><strong>易于测试</strong>：Spring 框架对 JUnit4 进行了支持，通过 Spring 的测试类，Spring 可以很方便地进行测试驱动开发（TDD）。</p>
+<p><strong>面向接口编程</strong>：Spring 框架鼓励程序员进行面向接口编程，这不仅有助于降低程序间的耦合，还能提高程序的可扩展性。</p>
+<p><strong>容器</strong>：Spring 框架就是一个容器，因为它包含并管理应用对象的生命周期和配置。</p>
+<p><strong>异常处理</strong>：Spring 提供了一个方便的 API 来翻译技术级别的异常（如 SQLException、HibernateException 等）为一致的、未检查的异常。</p>
+<p><strong>集成其他框架</strong>：Spring 并不排斥其他的开源 Java 框架。实际上，Spring 可以很容易地与 Hibernate，Struts，JSF 等框架集成。</p>
+<p><strong>支持事物管理</strong>：Spring 提供一种统一的事务管理接口，可以支持各种事务管理，无论是本地事务还是全局事务。</p>
+<p><strong>解耦合</strong></p>
+<p><strong>什么是耦合</strong></p>
+<blockquote>
+<p>程序之间的依赖性</p></blockquote>
+<p><strong>什么是依赖</strong></p>
+<blockquote>
+<p>Class A 中使用了Class B的属性或者方法，叫做Class A 依赖 Class B</p></blockquote>
+<p><strong>都有什么耦合</strong></p>
+<blockquote>
+<p>类之间的依赖，方法之间的依赖</p></blockquote>
+<p>解耦合使得系统中的各个模块或组件可以独立开发、测试、维护和扩展。</p>
+<p><strong>Spring如何解耦合</strong></p>
+<blockquote>
+<p>第一步：使用反射机制创建对象，而不是new关键字</p>
+<p>第二步：通过读取配置文件来获取要创建的对象的全限定类名</p></blockquote>
+<p><strong>Spring管理哪些对象</strong></p>
+<blockquote>
+<p>dao类，service类，controller类，工具类等适合把对象放到容器中。</p>
+<p>spring对象默认都是单例的（在容器中叫这个名称的对象就只有一个）。</p>
+<p>实体类对象，servlet、监听器、过滤器等不放入到spring容器中的对象。</p></blockquote>
+<h2 id="ioc控制反转与di依赖注入">IOC控制反转与DI依赖注入
+</h2><h3 id="ioc理解">IOC理解
+</h3><p><strong>IOC是什么</strong></p>
+<blockquote>
+<p>IOC（Inversion of Control）即：<strong>控制反转</strong>，不是一种技术，是一种设计思想。</p></blockquote>
+<p><strong>控制反转的理解</strong></p>
+<ul>
+<li>把对象的创建，赋值，管理工作都交给代码之外的容器实现，也就是对象的创建是有其他的外部资源来完成的。</li>
+<li>控制是指控制对象的创建、对象的属性赋值、对象之间的依赖关系管理。</li>
+<li>反转是指把控制权交给容器，也就是把对象交给容器来管理。用容器代替开发人员的管理、创建、赋值等。</li>
+<li>正转是指开发人员使用new创建对象，用set方法设置属性，通过手动实现依赖关系管理。</li>
+<li>控制反转理解起来就是：容器代替了开发人员对于对象的创建、赋值、依赖关系管理。</li>
+</ul>
+<p><strong>Spring中IOC的理解</strong></p>
+<ul>
+<li>Spring把管理的对象叫做Bean，即由开发人员管理Bean转变为Spring管理Bean，这就是Spring的<strong>控制反转（IOC）</strong>。</li>
+<li>Spring把这些管理的Bean放到容器中，这容器即：IOC容器（IOC Container）。</li>
+<li>Spring管理Bean是通过配置的方式来实现的，Spring提供了三种Bean配置方式：<strong>基于XML的配置方式、基于Java的配置方式、基于注解的配置方式。</strong></li>
+<li>Spring管理了Bean，就必然要管理Bean的整个生命周期。</li>
+<li>程序从IOC容器中获取Bean，并注入到程序中使用，这个过程就是依赖注入（DI）。所以说控制反转是通过依赖注入实现的。即：<strong>IOC是设计思想，DI是实现方式。</strong></li>
+<li>依赖注入的方式也有三种：<strong>setter方式、构造器注入、注解注入。</strong></li>
+</ul>
+<h3 id="spring-bean">Spring Bean
+</h3><p>Spring Bean是一个由Spring框架管理的Java对象。在Spring应用程序中，Bean是一个由IOC容器创建、组装和管理的对象。</p>
+<h4 id="bean的装配">Bean的装配
+</h4><h5 id="基于xml的配置方式">基于XML的配置方式
+</h5><p>顾名思义，就是将bean的信息配置.xml文件里，通过Spring加载文件为我们创建bean。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span class="line"><span class="cl"><span class="s">    http://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!--告诉spring创建对象
+</span></span></span><span class="line"><span class="cl"><span class="c">        声明bean，告诉spring要创建哪个类的对象
+</span></span></span><span class="line"><span class="cl"><span class="c">        id：对象的自定义名称，自己给对象起个名
+</span></span></span><span class="line"><span class="cl"><span class="c">        class：类的全限定名称（不能是接口）
+</span></span></span><span class="line"><span class="cl"><span class="c">    --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 一个Bean 声明一个对象 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;userPo&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;id&#34;</span> <span class="na">value=</span><span class="s">&#34;02&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;xygalaxy&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;age&#34;</span> <span class="na">value=</span><span class="s">&#34;18&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;sex&#34;</span> <span class="na">value=</span><span class="s">&#34;男&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/beans&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="基于java的配置方式">基于java的配置方式
+</h5><p>注解@Configuration，声明该类为配置类</p>
+<p>创建一个方法返回创建的对象，并在该方法加上@Bean注解，声明这是一个Bean。</p>
+<p>通过<code>AnnotationConfigApplicationContext</code>读取配置类，获取Bean。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">com.xygalaxy.po.UserPO</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @ClassName HelloSpringConfig
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Description spring配置类
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloSpringConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">&#34;helloUserPo&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">UserPO</span><span class="w"> </span><span class="nf">getUserPO</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">UserPO</span><span class="w"> </span><span class="n">userPO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserPO</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userPO</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userPO</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&#34;张三&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userPO</span><span class="p">.</span><span class="na">setAge</span><span class="p">(</span><span class="s">&#34;20&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userPO</span><span class="p">.</span><span class="na">setSex</span><span class="p">(</span><span class="s">&#34;男&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userPO</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 测试</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testHelloSpring3</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnnotationConfigApplicationContext</span><span class="p">(</span><span class="n">HelloSpringConfig</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">UserPO</span><span class="w"> </span><span class="n">userPo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">UserPO</span><span class="p">)</span><span class="w"> </span><span class="n">ac</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">&#34;helloUserPo&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">userPo</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// UserPO(id=1, name=张三, age=20, sex=男)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="基于注解的配置方式">基于注解的配置方式
+</h5><p>通过在类中添加注解，我们可以声明一个类由Spring进行管理。Spring会自自动搜索带有@Component，@Controller，@Service，@Repository四个注解的类，然后为我们创造并管理它们。前提是我们需要先配置Spring的注解扫描器，通过@ComponentScan配置注解扫描。</p>
+<p><strong>增加一个配置类，用于配置扫描器，让Spring扫描po这个包下的所有注解</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @ClassName HelloSpringScanConfig
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Description 声明配置类，并扫描指定包
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@ComponentScan</span><span class="p">(</span><span class="s">&#34;com.xygalaxy.po&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloSpringScanConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>UserPO类添加@Component注解，声明这个类直接给Spring管理。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Data</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @ClassName UserPO
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Description 用户实体
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserPO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * id
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 姓名
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 年龄
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">age</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 性别
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">sex</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>测试获取UserPo的Bean对象。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testHelloSpring4</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnnotationConfigApplicationContext</span><span class="p">(</span><span class="n">HelloSpringScanConfig</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">UserPO</span><span class="w"> </span><span class="n">userPo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">UserPO</span><span class="p">)</span><span class="w"> </span><span class="n">ac</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">&#34;userPO&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">userPo</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// UserPO(id=null, name=null, age=null, sex=null)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我们只是在UserPO实体类上加了@Component注解，只是声明这个类为Bean，给IOC管理，并未赋值操作，所以这里的值都是null。</p>
+<p><strong>@Component，@Controller，@Service，@Repository这几个注解的区别和用法</strong></p>
+<p><strong>@Component</strong>:</p>
+<ol>
+<li>@Component是一个通用的注解，表示该类被标注为一个Spring管理的Bean，并且可以作为一个通用的组件被注入和使用。</li>
+<li>在使用@Component注解标注类时，默认的Bean名称是类名的首字母小写，可以使用@Bean注解的name属性来自定义Bean名称。</li>
+</ol>
+<p><strong>@Controller</strong>:</p>
+<ol>
+<li>@Controller注解用于标注控制层的Bean，即MVC模式中的控制器。</li>
+<li>通常用于处理HTTP请求、响应和路由控制等功能。</li>
+<li>@Controller注解通常与@RequestMapping注解一起使用，用于指定请求的URL映射。</li>
+</ol>
+<p><strong>@Service</strong>:</p>
+<ol>
+<li>@Service注解用于标注服务层的Bean，即用于标识业务逻辑的组件。</li>
+<li>主要用于标识业务逻辑的处理，如事务管理、数据处理等。</li>
+<li>@Service注解通常与@Autowired注解一起使用，用于自动注入依赖的其他Bean。</li>
+</ol>
+<p><strong>@Repository:</strong></p>
+<ol>
+<li>@Repository注解用于标注数据访问层（DAO）的Bean。</li>
+<li>主要用于标识数据访问相关的类，如数据存取、数据库操作等。</li>
+<li>与@Service注解一样，@Repository注解通常与@Autowired注解一起使用，用于自动注入依赖的其他Bean</li>
+</ol>
+<h4 id="bean的装配策略">Bean的装配策略
+</h4><p>Byname自动装配：保证所有bean的id唯一 ，并且这个bean需要和自动注入的属性的set方法的值一致。</p>
+<p>//autowire = &ldquo;byName&quot;可以省略</p>
+ <bean id="userPo" class="com.xygalaxy.po.UserPO" autowire="byName">          
+  </bean>
+<p>Bytag自动装配：保证所有bean的class唯一 ，并且这个bean需要和自动注入的属性的类型一致；全局唯一，id属性可以省略。<strong>这里class就是该bean的属性类型</strong></p>
+<p>//id = &ldquo;userPo&quot;可以省略</p>
+<bean id="userPo" class="com.xygalaxy.po.UserPO" autowire="byType">            
+</bean>
+<h3 id="di理解">DI理解
+</h3><p>DI（依赖注入）是创建对象，并给属性赋值，注入就是赋值的意思。</p>
+<h4 id="di注入">DI注入
+</h4><h5 id="setter方式">setter方式
+</h5><p><strong>在类中提供需要注入成员的set方法</strong></p>
+<p>在xml方式中，property都是setter方式注入。通过property标签给指定属性赋值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;userPo&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;id&#34;</span> <span class="na">value=</span><span class="s">&#34;02&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;xygalaxy&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;age&#34;</span> <span class="na">value=</span><span class="s">&#34;18&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;sex&#34;</span> <span class="na">value=</span><span class="s">&#34;男&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="构造器注入">构造器注入
+</h5><p><strong>使用类中的构造函数，给成员变量赋值。</strong></p>
+<p>通过构造方法进行自动注入，spring会匹配与构造方法参数类型一致的bean进行注入，如果有一个多参数的构造方法，一个只有一个参数的构造方法，在容器中查找到多个匹配多参数构造方法的bean，那么spring会优先将bean注入到多参数的构造方法中。</p>
+<p>在XML配置方式中，<code>&lt;constructor-arg&gt;</code>是通过构造函数参数注入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--默认构造器方式--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;张三&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--通过有参构造创建对象。方式一：下标赋值--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;constructor-arg</span> <span class="na">index=</span><span class="s">&#34;0&#34;</span> <span class="na">value=</span><span class="s">&#34;jerry&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--通过有参构造创建对象。方式二：类型创建，不建议使用--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;constructor-arg</span> <span class="na">type=</span><span class="s">&#34;java.lang.String&#34;</span> <span class="na">value=</span><span class="s">&#34;jarry&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--通过有参构造创建对象。方式三：通过参数名，推荐使用--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.po.UserPO&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;jarry&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&#34;birthday&#34;</span> <span class="na">ref=</span><span class="s">&#34;now&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- 配置一个日期对象 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;now&#34;</span> <span class="na">class=</span><span class="s">&#34;java.util.Date&#34;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="注解注入">注解注入
+</h5><p><strong>通过注解的方式进行赋值。</strong></p>
+<p>以@Autowired（自动注入）注解注入为例，修饰符有三个属性：Constructor，byType，byName。默认按照byType注入。</p>
+<p><strong>注入Service</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 将Service交给Spring容器管理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloSpringServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HelloSpringService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过@Autowired自动注入到helloSpringService中，就可以直接使用了</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="n">HelloSpringServiceImpl</span><span class="w"> </span><span class="n">helloSpringService</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="其他属性注入">其他属性注入
+</h5><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">复杂类型的注入
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span class="line"><span class="cl"><span class="s">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;person&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.UserPo&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;zhangsan&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;age&#34;</span> <span class="na">value=</span><span class="s">&#34;12&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;student&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kang.pojo.Student&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--普通值注入，value：具体属性值--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;jerry&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--Bean注入，ref：对象--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;person&#34;</span> <span class="na">ref=</span><span class="s">&#34;person&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--数组注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;arr&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;array&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>AAA<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>BBB<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>CCC<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/array&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--List注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;myList&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;list&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>111<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>222<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>333<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/list&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--Map注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;myMap&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;map&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&#34;aaa&#34;</span> <span class="na">value=</span><span class="s">&#34;aaaa&#34;</span><span class="nt">&gt;&lt;/entry&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&#34;bbb&#34;</span> <span class="na">value=</span><span class="s">&#34;bbbb&#34;</span><span class="nt">&gt;&lt;/entry&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&#34;ccc&#34;</span> <span class="na">value=</span><span class="s">&#34;cccc&#34;</span><span class="nt">&gt;&lt;/entry&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/map&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--Set注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;mySet&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;set&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>111<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>222<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;value&gt;</span>333<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/set&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--null注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;wife&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;null/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--Properties注入--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;myPro&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;props&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&#34;aaa&#34;</span><span class="nt">&gt;</span>aaaa<span class="nt">&lt;/prop&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&#34;bbb&#34;</span><span class="nt">&gt;</span>bbbb<span class="nt">&lt;/prop&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&#34;ccc&#34;</span><span class="nt">&gt;</span>cccc<span class="nt">&lt;/prop&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/props&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/beans&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">p、c命名空间的注入
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xmlns:p=</span><span class="s">&#34;http://www.springframework.org/schema/p&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xmlns:c=</span><span class="s">&#34;http://www.springframework.org/schema/c&#34;</span>
+</span></span><span class="line"><span class="cl">       <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span class="line"><span class="cl"><span class="s">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!--p命名空间注入，可以直接注入属性的值：properties--&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.UserPo&#34;</span> <span class="na">p:name=</span><span class="s">&#34;jarry&#34;</span> <span class="na">p:age=</span><span class="s">&#34;15&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!--c命名空间注入，通过构造器注入：construct-args--&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user2&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.UserPo&#34;</span> <span class="na">c:name=</span><span class="s">&#34;张三&#34;</span> <span class="na">c:age=</span><span class="s">&#34;18&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/beans&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">bean作用域
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- 单例模式（Spring默认的机制） --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;helloSpringService&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.service.HelloSpringService&#34;</span> <span class="na">scope=</span><span class="s">&#34;singleton&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- 原型模式（多例模式） --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;helloSpringService&#34;</span> <span class="na">class=</span><span class="s">&#34;com.xygalaxy.service.HelloSpringService&#34;</span> <span class="na">scope=</span><span class="s">&#34;prototype&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--注解方式开启 --&gt;</span>
+</span></span><span class="line"><span class="cl">@Scope(&#34;prototype&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="aop面向切面编程">AOP面向切面编程
+</h3><p><strong>AOP的引入</strong></p>
+<p>传统的面向对象编程（OOP）通过将相关功能封装到类中，使得代码更加模块化和可维护。然而，当系统中的某些关注点（如日志、事务、安全等）需要横跨多个类时，OOP 的封装机制会变得复杂且难以维护。</p>
+<p>AOP 通过将这些横切关注点称为切面（Aspect），并将它们与主业务逻辑进行分离，实现了关注点的重用和集中管理。切面是一组跨越多个对象的通用行为集合，可以通过切点（Pointcut）来定位横切的位置，并通过增强（Advice）在指定的切点上执行额外的行为。</p>
+<p><img src="https://free-img.400040.xyz/4/2025/02/20/67b71ac9bb5e4.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250220200625176"
+	
+	
+></p>
+<p><strong>AOP的实现</strong>： <strong>Spring AOP和AspectJ。</strong></p>
+<h3 id="spring框架配置简化过程">Spring框架配置简化过程
+</h3><blockquote>
+<p>XML配置方法 -&gt; Java配置方式 -&gt; 注解配置方式 -&gt; SpringBoot托管配置方式</p></blockquote>
+<h4 id="xml配置">XML配置
+</h4><p><strong>创建接口及实现</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实现</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;这是One语句&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>创建aopSpring.xml配置文件</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="n">xml</span><span class="w"> </span><span class="n">version</span><span class="o">=</span><span class="s">&#34;1.0&#34;</span><span class="w"> </span><span class="n">encoding</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="o">?&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">beans</span><span class="w"> </span><span class="n">xmlns</span><span class="o">=</span><span class="s">&#34;http://www.springframework.org/schema/beans&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">xmlns</span><span class="p">:</span><span class="n">xsi</span><span class="o">=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">xsi</span><span class="p">:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span class="line"><span class="cl"><span class="s">    http://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&lt;</span><span class="n">bean</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="s">&#34;aopServiceImpl&#34;</span><span class="w"> </span><span class="kd">class</span><span class="err">=&#34;</span><span class="nc">com</span><span class="p">.</span><span class="na">xygalaxy</span><span class="p">.</span><span class="na">service</span><span class="p">.</span><span class="na">impl</span><span class="p">.</span><span class="na">AopServiceImpl</span><span class="s">&#34;&gt;&lt;/bean&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">&lt;/beans&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>测试获取aopServiceImpl对象</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAop</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ClassPathXmlApplicationContext</span><span class="p">(</span><span class="s">&#34;aopSpring.xml&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">AopServiceImpl</span><span class="w"> </span><span class="n">aopService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ac</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">AopServiceImpl</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">aopService</span><span class="p">.</span><span class="na">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 输出结果：这是One语句
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>著作权归 @星云系 所有。 链接：https://blog.xygalaxy.com/后端/Java/Java框架/Spring/4.Spring框架配置简化过程.html</p>
+<h4 id="java配置">java配置
+</h4><p><strong>创建接口及实现</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实现</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;这是One语句&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>创建配置类</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">&#34;aopServiceImpl&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">AopServiceImpl</span><span class="w"> </span><span class="nf">getAopService</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">AopServiceImpl</span><span class="w"> </span><span class="n">aopService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AopServiceImpl</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">aopService</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>测试获取aopServiceImpl对象</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAop</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnnotationConfigApplicationContext</span><span class="p">(</span><span class="n">AopConfig</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">AopServiceImpl</span><span class="w"> </span><span class="n">aopService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ac</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">AopServiceImpl</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">aopService</span><span class="p">.</span><span class="na">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 输出结果：这是One语句
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="注解配置">注解配置
+</h4><p><strong>创建接口及实现</strong></p>
+<p>增加注解@Service，交给Spring管理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实现</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AopService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;这是One语句&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>测试获取aopServiceImpl对象</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 单元测试需要加@RunWith注解，正常应用中不需要</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RunWith</span><span class="p">(</span><span class="n">SpringJUnit4ClassRunner</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">AopServiceImpl</span><span class="w"> </span><span class="n">aopService</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAop</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">aopService</span><span class="p">.</span><span class="na">sayOne</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 输出结果：这是One语句
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="springboot托管配置">SpringBoot托管配置
+</h4><p>Spring Boot是一个开源的Java框架，它简化了基于Spring平台开发应用程序的过程。它提供了预设的模板，通过自动配置（auto-configuration）和约定大于配置（convention-over-configuration）的原则降低了开发者的配置负担。这让开发者可以专注于应用程序的功能开发，提高了开发效率。</p>
+<h3 id="spring事务">Spring事务
+</h3><h4 id="编程式">编程式
+</h4><h4 id="声明式">声明式
+</h4><p>@Transactional(propagation = Propagation.REQUIRED)</p>
+<h3 id="spring-mvc">Spring MVC
+</h3><blockquote>
+<p>前提</p>
+<ul>
+<li><strong>对Spring有一定了解</strong></li>
+<li><strong>对JavaWeb有一定了解</strong></li>
+<li><strong>对Servlet有一定了解</strong></li>
+</ul></blockquote>
+<h3 id="mybatis">mybatis
+</h3><h3 id="mybatisplus">mybatisplus
+</h3><h3 id="ssm">ssm
+</h3>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 yyy&#39;s blog
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/lcx823/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
