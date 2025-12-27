@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="结构的语言：从巴别塔到UML的统一之道 引子：上帝的诅咒与工程师的救赎 在《圣经·旧约》的创世记第11章中，记载着这样一个意味深长的故事。\n大洪水之后，诺亚的子孙们在示拿地定居下来。那时候，天下人的口音言语都是一样的。由于沟通毫无障碍，人类的技术协作能力达到了巅峰。他们商量说：“来吧！我们要建造一座城和一座塔，塔顶通天，为要传扬我们的名。”\n">
+<title></title>
+
+<link rel='canonical' href='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-uml%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/'>
+
+<link rel="stylesheet" href="/lcx823/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="">
+<meta property='og:description' content="结构的语言：从巴别塔到UML的统一之道 引子：上帝的诅咒与工程师的救赎 在《圣经·旧约》的创世记第11章中，记载着这样一个意味深长的故事。\n大洪水之后，诺亚的子孙们在示拿地定居下来。那时候，天下人的口音言语都是一样的。由于沟通毫无障碍，人类的技术协作能力达到了巅峰。他们商量说：“来吧！我们要建造一座城和一座塔，塔顶通天，为要传扬我们的名。”\n">
+<meta property='og:url' content='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-uml%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/'>
+<meta property='og:site_name' content='yyy'>
+<meta property='og:type' content='article'><meta property='article:section' content='设计模式' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="结构的语言：从巴别塔到UML的统一之道 引子：上帝的诅咒与工程师的救赎 在《圣经·旧约》的创世记第11章中，记载着这样一个意味深长的故事。\n大洪水之后，诺亚的子孙们在示拿地定居下来。那时候，天下人的口音言语都是一样的。由于沟通毫无障碍，人类的技术协作能力达到了巅峰。他们商量说：“来吧！我们要建造一座城和一座塔，塔顶通天，为要传扬我们的名。”\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/lcx823/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/lcx823/img/avatar_hu_bdf33bd95d7d61a2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😉</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/lcx823">yyy</a></h1>
+            <h2 class="site-description">演示说明</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/3494362409339008'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="Bilibili--Streamline-Font-Awesome" height="16" width="16"><desc>Bilibili Streamline Icon: https://streamlinehq.com</desc><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M15.123284375 4.0830875c0.511434375 0.55430625 0.747246875 1.215803125 0.713559375 2.01205v6.1984625c-0.01225 0.80849375 -0.28175 1.473053125 -0.811559375 1.993675 -0.526746875 0.520621875 -1.197428125 0.79318125 -2.005925 0.81768125H2.978096875c-0.810028125 -0.0245 -1.476425 -0.300121875 -1.999190625 -0.83299375C0.456509375 13.739090625 0.18348125 13.03778125 0.16 12.1711V6.0951375c0.02348125 -0.796246875 0.296509375 -1.45774375 0.81890625 -2.01205 0.522765625 -0.50071875 1.1891625 -0.775728125 1.999190625 -0.799309375h0.89975625L3.1015125 2.493353125c-0.176090625 -0.17548125 -0.264290625 -0.398125 -0.264290625 -0.667315625 0 -0.2695 0.0882 -0.491834375 0.264290625 -0.667528125 0.17609375 -0.175634375 0.39965625 -0.263465625 0.669153125 -0.263465625s0.493059375 0.08783125 0.670684375 0.263465625l2.2448 2.12526875h2.69498125l2.28155 -2.12526875c0.1868125 -0.175634375 0.416496875 -0.263465625 0.685996875 -0.263465625 0.269496875 0 0.493059375 0.08783125 0.67068125 0.263465625 0.1745625 0.17569375 0.263375 0.398028125 0.263375 0.667528125 0 0.269190625 -0.0888125 0.491834375 -0.263375 0.667315625l-0.77480625 0.790425h0.89730625c0.808496875 0.02358125 1.469990625 0.298590625 1.981425 0.799309375Zm-1.188240625 2.134546875c-0.01225 -0.293996875 -0.1133125 -0.532871875 -0.3276875 -0.71968125 -0.15925 -0.1868125 -0.428746875 -0.287875 -0.695184375 -0.300125H3.1015125c-0.293690625 0.01225 -0.534403125 0.1133125 -0.72213125 0.300125 -0.1880375 0.186809375 -0.287875 0.425684375 -0.2995125 0.71968125v5.953465625c0 0.28175 0.0998375 0.520621875 0.2995125 0.719684375s0.440384375 0.300121875 0.72213125 0.300121875h9.8106625c0.281746875 0 0.520621875 -0.1010625 0.71355625 -0.300121875 0.1929375 -0.1990625 0.2970625 -0.4379375 0.3093125 -0.719684375V6.217634375Zm-8.094140625 1.30768125c0.1929375 0.1929375 0.2970625 0.431809375 0.3093125 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300125 0.71049375 -0.189871875 0.1929375 -0.428746875 0.2909375 -0.72274375 0.2909375 -0.294 0 -0.535934375 -0.098 -0.722746875 -0.2909375 -0.1868125 -0.192934375 -0.287871875 -0.428746875 -0.300121875 -0.71049375V8.2358125c0.01225 -0.2786875 0.116371875 -0.517559375 0.309309375 -0.710496875 0.1929375 -0.1929375 0.404246875 -0.293996875 0.713559375 -0.306246875 0.281746875 0.01225 0.520621875 0.113309375 0.71355625 0.306246875Zm5.864653125 0c0.192934375 0.1929375 0.297059375 0.431809375 0.309309375 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300121875 0.71049375 -0.1868125 0.1929375 -0.428746875 0.2909375 -0.722746875 0.2909375 -0.293996875 0 -0.532871875 -0.098 -0.72274375 -0.2909375 -0.214375 -0.192934375 -0.287875 -0.428746875 -0.2970625 -0.71049375V8.2358125c0.0091875 -0.2786875 0.1133125 -0.517559375 0.30625 -0.710496875 0.192934375 -0.1929375 0.431809375 -0.293996875 0.71355625 -0.306246875 0.28175 0.01225 0.520621875 0.113309375 0.713559375 0.306246875Z" fill="#000000" stroke-width="0.0313"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/lcx823/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引子上帝的诅咒与工程师的救赎">引子：上帝的诅咒与工程师的救赎</a></li>
+    <li><a href="#第一章柏拉图的理型世界类图的哲学本质">第一章：柏拉图的理型世界——类图的哲学本质</a>
+      <ol>
+        <li><a href="#11-矩形框里的契约">1.1 矩形框里的契约</a></li>
+        <li><a href="#12-抽象类与接口从具体到虚无">1.2 抽象类与接口：从具体到虚无</a></li>
+      </ol>
+    </li>
+    <li><a href="#第二章关系的几何学连接对象的六种纽带">第二章：关系的几何学——连接对象的六种纽带</a>
+      <ol>
+        <li><a href="#21-依赖dependency最熟悉的陌生人">2.1 依赖（Dependency）：最熟悉的陌生人</a></li>
+        <li><a href="#22-关联association朋友与同事">2.2 关联（Association）：朋友与同事</a></li>
+        <li><a href="#23-聚合aggregation大雁与雁群">2.3 聚合（Aggregation）：大雁与雁群</a></li>
+        <li><a href="#24-组合composition大雁与翅膀">2.4 组合（Composition）：大雁与翅膀</a></li>
+        <li><a href="#25-泛化generalization父与子">2.5 泛化（Generalization）：父与子</a></li>
+        <li><a href="#26-实现realization蓝图与建筑">2.6 实现（Realization）：蓝图与建筑</a></li>
+      </ol>
+    </li>
+    <li><a href="#第三章时间的维度动态图的叙事艺术">第三章：时间的维度——动态图的叙事艺术</a>
+      <ol>
+        <li><a href="#31-时序图sequence-diagram对象间的对话剧本">3.1 时序图（Sequence Diagram）：对象间的对话剧本</a></li>
+        <li><a href="#32-状态图state-diagram有限状态机的智慧">3.2 状态图（State Diagram）：有限状态机的智慧</a></li>
+      </ol>
+    </li>
+    <li><a href="#第四章从图纸到思想用uml解构设计模式">第四章：从图纸到思想——用UML解构设计模式</a>
+      <ol>
+        <li><a href="#41-工厂模式factory-pattern解耦的艺术">4.1 工厂模式（Factory Pattern）：解耦的艺术</a></li>
+        <li><a href="#42-策略模式strategy-pattern算法的插拔">4.2 策略模式（Strategy Pattern）：算法的插拔</a></li>
+      </ol>
+    </li>
+    <li><a href="#结语超越图形的智慧">结语：超越图形的智慧</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-uml%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"></a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="结构的语言从巴别塔到uml的统一之道">结构的语言：从巴别塔到UML的统一之道
+</h1><h2 id="引子上帝的诅咒与工程师的救赎">引子：上帝的诅咒与工程师的救赎
+</h2><p>在《圣经·旧约》的创世记第11章中，记载着这样一个意味深长的故事。</p>
+<p>大洪水之后，诺亚的子孙们在示拿地定居下来。那时候，天下人的口音言语都是一样的。由于沟通毫无障碍，人类的技术协作能力达到了巅峰。他们商量说：“来吧！我们要建造一座城和一座塔，塔顶通天，为要传扬我们的名。”</p>
+<p>这项工程进展神速，很快就惊动了天上的上帝。耶和华降临看视，心想：“看哪，他们成为一样的人民，都是一样的言语，如今既做起这事来，以后他们所要这类的事，就没有不成就的了。”</p>
+<p>于是，上帝变乱了他们的口音，使他们的言语彼此不通。曾经亲密无间的工匠们突然发现，当泥瓦匠喊“递给我一块砖”时，运送者递过来的却是一桶水。误解丛生，争吵不断，工程最终停摆，那座未完成的塔，便成了著名的“巴别塔”（Tower of Babel，意为变乱）。</p>
+<p>这个古老的故事，其实揭示了一个贯穿人类文明始终的第一性原理：<strong>信息的有效传递，是复杂系统协作的基石。</strong> 当系统的复杂度超过了单体的认知极限，协作就成为了必须；而协作的瓶颈，永远在于沟通的带宽和准确性。</p>
+<p>把时钟拨回到20世纪90年代初，计算机软件行业正经历着属于它的“巴别塔时刻”。</p>
+<p>那是面向对象编程（OOP）刚刚兴起的草莽时代。C++开始流行，Smalltalk还在散发余热。软件工程师们发现，随着代码行数从几千行膨胀到几十万行，仅仅依靠阅读代码来理解系统结构已经变得不可能。我们需要一种“图纸”，就像建筑师有蓝图，电子工程师有电路图一样。</p>
+<p>然而，当时的情况是群雄割据。格雷迪·布奇（Grady Booch）有一套画云朵形状的画法，詹姆斯·兰鲍（James Rumbaugh）喜欢用矩形，伊瓦尔·雅各布森（Ivar Jacobson）则专注于用例。一家公司的程序员跳槽到另一家，不仅要学新业务，还得先学一套全新的“画图方言”。这种沟通的高熵状态，极大地阻碍了软件工程的发展。</p>
+<p>直到1995年，这三位大师（被称为“三友”，The Three Amigos）决定放下门户之见，在Rational软件公司联手。他们融合了各自方法的精华，创造了一种统一的建模语言——<strong>UML (Unified Modeling Language)</strong>。</p>
+<p>这不仅仅是一个技术标准的统一，更是软件工程史上的一次“书同文、车同轨”。</p>
+<p>这篇文章，我不打算让你死记硬背UML那繁杂的14种图表，那是“术”的层面。我想带你回到设计模式的源头，去探寻UML背后的“道”。</p>
+<p>当你理解了UML是如何用图形符号去映射人类的逻辑思维，当你明白了线段两端的箭头不仅仅是几何图形，而是对象之间契约的具象化时，你就掌握了通往架构师之路的钥匙。</p>
+<hr>
+<h2 id="第一章柏拉图的理型世界类图的哲学本质">第一章：柏拉图的理型世界——类图的哲学本质
+</h2><p>古希腊哲学家柏拉图曾提出过著名的“理型论”（Theory of Forms）。他认为，我们在现实世界中看到的各种具体的椅子——木头的、铁的、三条腿的、四条腿的——都只是表象。在这些表象背后，存在着一个完美的、抽象的“椅子的理型”（Idea of a Chair）。这个理型包含了椅子之所以为椅子的本质特征。</p>
+<p>在面向对象的程序设计中，<strong>类（Class）</strong> 就是柏拉图口中的“理型”，而<strong>对象（Object）</strong> 则是现实世界中具体的投影。</p>
+<p>UML中最基础、也是最重要的<strong>类图（Class Diagram）</strong>，正是用来描述这个理型世界的地图。</p>
+<h3 id="11-矩形框里的契约">1.1 矩形框里的契约
+</h3><p>在UML中，一个类被描绘成一个矩形，通常分为三层。这看起来很简单，但每一层都蕴含着严谨的逻辑。</p>
+<ul>
+<li><strong>第一层：类名</strong>。这是概念的抽象。当我们写下<code>Employee</code>（员工）这个词时，我们实际上是在定义一个集合，划定了系统的边界。</li>
+<li><strong>第二层：属性（Attributes）</strong>。这是数据的静态特征。</li>
+<li><strong>第三层：方法（Operations）</strong>。这是对象的动态行为。</li>
+</ul>
+<p>初学者往往容易忽略的是那些微小的符号：<code>+</code>（public）、<code>-</code>（private）、<code>#</code>（protected）。在吴军看来，这些不仅仅是访问控制符，它们代表了<strong>信息隐藏（Information Hiding）</strong> 的原则。</p>
+<p>为什么我们要把属性设为<code>-</code>？这源于系统设计中的熵减原理。如果我们让所有数据都暴露（public），系统的状态就会变得不可控，熵值急剧增加。通过将属性私有化，仅通过公共方法（接口）与外界交互，我们实际上是在人为地降低系统的无序度。</p>
+<p><strong>类图，本质上是一份契约（Contract）。</strong> 它告诉使用者：“你不需要知道我内部是如何运作的（封装），你只需要知道我有这些公开的能力供你调用。”</p>
+<h3 id="12-抽象类与接口从具体到虚无">1.2 抽象类与接口：从具体到虚无
+</h3><p>在类图中，你常会看到斜体的类名，或者带有<code>&lt;&lt;interface&gt;&gt;</code>标记的矩形。这是思维抽象层级的跃迁。</p>
+<p>如果说<code>Dog</code>和<code>Cat</code>是具体的类，那么<code>Animal</code>就是一个抽象类。你无法在现实中找到一个仅仅是“动物”但既不是猫也不是狗的实体。抽象类代表了<strong>提取公因式</strong>的数学思想——将共性的代码上移，避免重复。</p>
+<p>而接口（Interface），则更进一步，它完全剥离了实现，只保留了行为的定义。在UML中，接口往往用一个圆圈或者带有构造型的矩形表示。</p>
+<p>理解接口，是理解设计模式的起点。设计模式中的“依赖倒置原则”告诉我们：<strong>高层模块不应该依赖低层模块，二者都应该依赖其抽象。</strong> 在UML图中，这表现为箭头指向接口，而不是指向具体的类。这就像你家里的插座，它定义了电压和形状的标准（接口），至于插上的是台灯还是电脑（实现类），电网并不关心。</p>
+<hr>
+<h2 id="第二章关系的几何学连接对象的六种纽带">第二章：关系的几何学——连接对象的六种纽带
+</h2><p>如果说类是孤立的岛屿，那么关系（Relationship）就是连接岛屿的桥梁。UML最精妙，也是最让学生头疼的地方，就在于那几条长得差不多的线。</p>
+<p>在数学图论中，边（Edge）定义了节点（Node）之间的拓扑结构。在UML中，不同的线代表了对象之间不同强度的耦合（Coupling）。</p>
+<p>让我们由弱到强，来剖析这六种关系。这不仅仅是画图的规范，更是对现实世界人际关系的模拟。</p>
+<h3 id="21-依赖dependency最熟悉的陌生人">2.1 依赖（Dependency）：最熟悉的陌生人
+</h3><p><strong>符号：</strong> 虚线 + 箭头
+<strong>语义：</strong> Use-a（使用）</p>
+<p>这是最弱的一种关系。想象一下，你是一名木匠，你需要一把锤子来干活。你和锤子的关系就是“依赖”。你不需要拥有锤子（它不是你的属性），你只是在某个动作（方法）中临时使用了它。</p>
+<p>在代码中，这通常表现为：类A的方法参数中传入了类B的对象。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Carpenter</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">(</span><span class="n">Hammer</span><span class="w"> </span><span class="n">hammer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 依赖关系</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hammer</span><span class="p">.</span><span class="na">hit</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果锤子的定义变了，木匠的工作可能会受影响。但这种影响是临时的、局部的。</p>
+<h3 id="22-关联association朋友与同事">2.2 关联（Association）：朋友与同事
+</h3><p><strong>符号：</strong> 实线 + 箭头（或无箭头）
+<strong>语义：</strong> Has-a (weak) / Know-a</p>
+<p>这是一种平等的、长期的关系。比如老师和学生。老师知道他的学生是谁，学生也知道老师是谁。这种关系比依赖要强，因为它是类的一部分。</p>
+<p>在代码中，通常表现为：类A中有一个成员变量是类B类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Teacher</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">student</span><span class="p">;</span><span class="w"> </span><span class="c1">// 关联关系</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-聚合aggregation大雁与雁群">2.3 聚合（Aggregation）：大雁与雁群
+</h3><p><strong>符号：</strong> 空心菱形 + 实线
+<strong>语义：</strong> Has-a (整体与部分，松散)</p>
+<p>这是初学者最容易混淆的概念。聚合代表“整体-部分”关系，但这种关系是松散的。</p>
+<p>让我们用一个经典的类比：<strong>大雁和雁群</strong>。
+雁群是由大雁组成的，但大雁不依附于雁群而生存。如果雁群解散了，大雁依然是一只独立的大雁，它可以加入别的雁群，或者独自飞翔。</p>
+<p>这代表了生命周期的<strong>不一致性</strong>。整体消亡，部分依然存在。</p>
+<h3 id="24-组合composition大雁与翅膀">2.4 组合（Composition）：大雁与翅膀
+</h3><p><strong>符号：</strong> 实心菱形 + 实线
+<strong>语义：</strong> Contains-a (整体与部分，紧密)</p>
+<p>这是比聚合更强的“整体-部分”关系。
+<strong>大雁和它的翅膀</strong>。
+如果这只大雁死去了，它的翅膀也就随之死去了（在软件系统中，意味着内存同时被回收）。翅膀不能脱离大雁独立存在。</p>
+<p><strong>区分聚合与组合的关键在于生命周期：</strong> 你的心脏（组合）和你的衣服（聚合）。你死了，心脏停止跳动；但你的衣服可以被别人穿。</p>
+<p>在设计模式中，我们倾向于使用组合/聚合来代替继承，这就是著名的“多用组合，少用继承”原则。因为组合关系在运行时可以动态改变（换件衣服），而继承关系在编译时就锁死了。</p>
+<h3 id="25-泛化generalization父与子">2.5 泛化（Generalization）：父与子
+</h3><p><strong>符号：</strong> 空心三角形 + 实线
+<strong>语义：</strong> Is-a（继承）</p>
+<p>这是最直观的关系。猫是动物，轿车是车。它代表了特殊与一般的关系。在代码中对应<code>extends</code>关键字。</p>
+<p>虽然继承很强大，但吴军老师可能会提醒你：不要滥用继承。继承具有极强的侵入性。子类会无条件继承父类的所有包袱。在生物进化史上，物种的变异往往伴随着巨大的代价。在软件中，过深的继承树是维护者的噩梦。</p>
+<h3 id="26-实现realization蓝图与建筑">2.6 实现（Realization）：蓝图与建筑
+</h3><p><strong>符号：</strong> 空心三角形 + 虚线
+<strong>语义：</strong> Can-do（接口实现）</p>
+<p>这对应于代码中的<code>implements</code>。类承诺实现接口中定义的所有行为。这是契约精神的最高体现。</p>
+<p><strong>总结一下记忆口诀：</strong></p>
+<ul>
+<li>虚线依赖实关联（虚线是临时用，实线是长期有）</li>
+<li>空菱聚合实组合（空心不仅密，实心同生死）</li>
+<li>三角泛化实接口（实线继承类，虚线实现接口）</li>
+</ul>
+<hr>
+<h2 id="第三章时间的维度动态图的叙事艺术">第三章：时间的维度——动态图的叙事艺术
+</h2><p>如果说类图是静态的摄影，那么动态图就是电影。世界不是静止的，软件的本质在于<strong>交互（Interaction）</strong>。</p>
+<p>在物理学中，描述一个系统需要两个要素：状态（State）和演化方程（Evolution）。UML用状态图和时序图来捕捉这两点。</p>
+<h3 id="31-时序图sequence-diagram对象间的对话剧本">3.1 时序图（Sequence Diagram）：对象间的对话剧本
+</h3><p>想象你在看一部话剧。剧本上写着：</p>
+<ul>
+<li>主角（用户）走上舞台。</li>
+<li>主角对管家（ATM机）说：“取款100元”。</li>
+<li>管家转身打电话给银行（服务器）确认余额。</li>
+<li>银行回复：“余额充足”。</li>
+<li>管家吐出钞票。</li>
+</ul>
+<p>时序图就是这个剧本的视觉化。</p>
+<p>它的X轴代表<strong>对象</strong>，Y轴代表<strong>时间</strong>。这是一张二维的时空图。</p>
+<p><strong>为什么时序图如此重要？</strong>
+因为它揭示了控制流（Control Flow）。在设计模式中，比如<strong>观察者模式（Observer Pattern）</strong>，单纯看类图，你只看到一堆类互相引用。但如果你画一张时序图，你会清晰地看到：</p>
+<ol>
+<li>Subject状态改变。</li>
+<li>Subject遍历所有Observer。</li>
+<li>Subject调用每个Observer的<code>update()</code>方法。</li>
+</ol>
+<p>这种“好莱坞原则”（Don&rsquo;t call us, we&rsquo;ll call you）的控制反转逻辑，只有在时序图中才能展现得淋漓尽致。</p>
+<h3 id="32-状态图state-diagram有限状态机的智慧">3.2 状态图（State Diagram）：有限状态机的智慧
+</h3><p>香农（Claude Shannon）在创立信息论时，大量运用了状态机的概念。图灵机（Turing Machine）本质上也是一个在无限纸带上读写并切换状态的机器。</p>
+<p>状态图描述了一个对象在其生命周期内，如何响应事件并改变自身状态。</p>
+<p>以<strong>TCP连接</strong>为例：
+CLOSED -&gt; SYN_SENT -&gt; ESTABLISHED -&gt; FIN_WAIT -&gt; CLOSED。</p>
+<p>如果不用状态图，程序员往往会写出满屏的<code>if-else</code>或<code>switch-case</code>语句，逻辑支离破碎，极易出错。有了状态图，我们就在混乱的逻辑中建立了秩序。</p>
+<p><strong>状态模式（State Pattern）</strong> 正是为了解决这个问题而生。它将每个状态封装成一个类，让状态转换变成对象间的切换。当你看着UML状态图时，你应该能脑补出那些状态类是如何像接力赛一样传递控制权的。</p>
+<hr>
+<h2 id="第四章从图纸到思想用uml解构设计模式">第四章：从图纸到思想——用UML解构设计模式
+</h2><p>现在，我们有了基础的词汇（类图）和语法（关系），让我们来读懂一些经典的文学作品——设计模式。</p>
+<p>设计模式不是凭空发明的，它是从无数优秀的软件架构中涌现（Emergence）出来的最佳实践。正如建筑大师克里斯托弗·亚历山大（Christopher Alexander）在《建筑模式语言》中所说：“每一个模式都描述了一个在我们周围不断发生的问题，以及该问题的解决方案的核心。”</p>
+<h3 id="41-工厂模式factory-pattern解耦的艺术">4.1 工厂模式（Factory Pattern）：解耦的艺术
+</h3><p>在没有工厂模式之前，客户端代码充满了<code>new Product()</code>。这意味着客户端必须知道具体产品的类名。</p>
+<p>让我们看看工厂模式的UML类图：</p>
+<ul>
+<li>一个<code>Creator</code>接口（或抽象类）。</li>
+<li>具体的<code>ConcreteCreator</code>。</li>
+<li>箭头指向：Client -&gt; Creator, Creator -&gt; Product。</li>
+</ul>
+<p>你会发现，<strong>Client不再直接依赖ConcreteProduct</strong>。这根实线箭头消失了，取而代之的是指向接口的箭头。</p>
+<p>这揭示了软件工程的一个核心思想：<strong>解耦（Decoupling）</strong>。UML图清晰地展示了这种依赖关系的切断。通过引入一个中间层（工厂），我们将“要什么”（接口）和“怎么造”（实现）分开了。</p>
+<h3 id="42-策略模式strategy-pattern算法的插拔">4.2 策略模式（Strategy Pattern）：算法的插拔
+</h3><p>想象你在设计一个电商的结账系统。普通会员不打折，VIP打九折，超级VIP打八折。
+新手会在<code>calculatePrice()</code>方法里写一堆<code>if (type == VIP)</code>。</p>
+<p>策略模式的UML图展示了另一种优雅：</p>
+<ul>
+<li>Context（上下文）类聚合了一个<code>Strategy</code>接口。</li>
+<li>各种算法（NormalStrategy, VipStrategy）实现了这个接口。</li>
+</ul>
+<p>在UML图中，那个<strong>聚合的空心菱形</strong>是点睛之笔。它意味着Context持有Strategy，但Strategy可以随时被替换。这就好比你的电脑（Context）有一个USB接口（Strategy Interface），你可以插U盘，也可以插鼠标。</p>
+<p>这种<strong>组合优于继承</strong>的思想，在UML图中表现得一目了然。</p>
+<hr>
+<h2 id="结语超越图形的智慧">结语：超越图形的智慧
+</h2><p>讲到这里，我们从巴别塔的混乱，聊到了UML的统一；从柏拉图的理型，聊到了代码中的类；从大雁的翅膀，聊到了对象的生命周期。</p>
+<p>我想告诉你的是，UML不仅仅是一种画图工具，它是一种<strong>思维工具</strong>。</p>
+<p>在计算机科学中，我们面临的最大挑战永远是<strong>复杂度（Complexity）</strong>。人脑的工作记忆（Working Memory）是非常有限的，心理学家米勒告诉我们，神奇的数字是7加减2。当一个系统包含上百个类时，我们的大脑就宕机了。</p>
+<p>UML的作用，就是通过<strong>抽象</strong>和<strong>可视化</strong>，帮我们过滤掉不必要的细节（比如具体的代码实现），让我们能够站在万米高空，俯瞰系统的山川地貌。这就是吴军老师常说的“上帝视角”。</p>
+<p>对于正在学习计算机科学的你，我有几点建议：</p>
+<ol>
+<li><strong>不要迷信工具</strong>：不要为了画图而画图。最棒的UML图往往诞生在会议室的白板上，或者是你的草稿纸上，而不是那些昂贵的CASE工具里。图是为了交流，只要能把意思传达清楚，草图胜过精修图。</li>
+<li><strong>双向映射训练</strong>：找一段优秀的开源代码（比如Spring或JDK源码），尝试把它逆向画成UML图；然后再试着只看UML图，还原出代码骨架。这种“翻译”训练，能极快地提升你的架构感。</li>
+<li><strong>关注“为什么”</strong>：当你画下一条继承线时，问自己：真的需要继承吗？组合会不会更好？当你画下一条依赖线时，问自己：这个耦合是必须的吗？能不能解耦？</li>
+</ol>
+<p>技术在变，语言在变（从C++到Java到Go到Rust），但<strong>结构的设计美学</strong>是永恒的。UML所承载的面向对象思想，以及设计模式所蕴含的解耦智慧，是穿越周期的力量。</p>
+<p>愿你在代码的海洋中，既能做一名精益求精的工匠，也能成为一名胸有沟壑的建筑师。</p>
+<p>因为，数学之美，终究是逻辑之美，是秩序之美。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 yyy&#39;s blog
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/lcx823/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

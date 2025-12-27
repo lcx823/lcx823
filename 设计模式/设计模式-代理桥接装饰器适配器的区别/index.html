@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是一篇尝试还原吴军老师《数学之美》与《文明之光》风格的深度教学文章。\n结构的哲学：在封装与解耦之间寻找自由 —— 深度解析代理、桥接、装饰器与适配器模式\n引子：从克里斯托弗·亚历山大的小径说起 在加州伯克利分校的校园旁，有一位名叫克里斯托弗·亚历山大（Christopher Alexander）的建筑学教授。他在20世纪70年代做了一件非常有意思的事情。他并没有去设计一座具体的摩天大楼，而是花了数年时间去观察中世纪的城镇、瑞士的农舍以及日本的神社。\n">
+<title></title>
+
+<link rel='canonical' href='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A1%A5%E6%8E%A5%E8%A3%85%E9%A5%B0%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/'>
+
+<link rel="stylesheet" href="/lcx823/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="">
+<meta property='og:description' content="这是一篇尝试还原吴军老师《数学之美》与《文明之光》风格的深度教学文章。\n结构的哲学：在封装与解耦之间寻找自由 —— 深度解析代理、桥接、装饰器与适配器模式\n引子：从克里斯托弗·亚历山大的小径说起 在加州伯克利分校的校园旁，有一位名叫克里斯托弗·亚历山大（Christopher Alexander）的建筑学教授。他在20世纪70年代做了一件非常有意思的事情。他并没有去设计一座具体的摩天大楼，而是花了数年时间去观察中世纪的城镇、瑞士的农舍以及日本的神社。\n">
+<meta property='og:url' content='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A1%A5%E6%8E%A5%E8%A3%85%E9%A5%B0%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/'>
+<meta property='og:site_name' content='yyy'>
+<meta property='og:type' content='article'><meta property='article:section' content='设计模式' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="这是一篇尝试还原吴军老师《数学之美》与《文明之光》风格的深度教学文章。\n结构的哲学：在封装与解耦之间寻找自由 —— 深度解析代理、桥接、装饰器与适配器模式\n引子：从克里斯托弗·亚历山大的小径说起 在加州伯克利分校的校园旁，有一位名叫克里斯托弗·亚历山大（Christopher Alexander）的建筑学教授。他在20世纪70年代做了一件非常有意思的事情。他并没有去设计一座具体的摩天大楼，而是花了数年时间去观察中世纪的城镇、瑞士的农舍以及日本的神社。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/lcx823/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/lcx823/img/avatar_hu_bdf33bd95d7d61a2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😉</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/lcx823">yyy</a></h1>
+            <h2 class="site-description">演示说明</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/3494362409339008'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="Bilibili--Streamline-Font-Awesome" height="16" width="16"><desc>Bilibili Streamline Icon: https://streamlinehq.com</desc><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M15.123284375 4.0830875c0.511434375 0.55430625 0.747246875 1.215803125 0.713559375 2.01205v6.1984625c-0.01225 0.80849375 -0.28175 1.473053125 -0.811559375 1.993675 -0.526746875 0.520621875 -1.197428125 0.79318125 -2.005925 0.81768125H2.978096875c-0.810028125 -0.0245 -1.476425 -0.300121875 -1.999190625 -0.83299375C0.456509375 13.739090625 0.18348125 13.03778125 0.16 12.1711V6.0951375c0.02348125 -0.796246875 0.296509375 -1.45774375 0.81890625 -2.01205 0.522765625 -0.50071875 1.1891625 -0.775728125 1.999190625 -0.799309375h0.89975625L3.1015125 2.493353125c-0.176090625 -0.17548125 -0.264290625 -0.398125 -0.264290625 -0.667315625 0 -0.2695 0.0882 -0.491834375 0.264290625 -0.667528125 0.17609375 -0.175634375 0.39965625 -0.263465625 0.669153125 -0.263465625s0.493059375 0.08783125 0.670684375 0.263465625l2.2448 2.12526875h2.69498125l2.28155 -2.12526875c0.1868125 -0.175634375 0.416496875 -0.263465625 0.685996875 -0.263465625 0.269496875 0 0.493059375 0.08783125 0.67068125 0.263465625 0.1745625 0.17569375 0.263375 0.398028125 0.263375 0.667528125 0 0.269190625 -0.0888125 0.491834375 -0.263375 0.667315625l-0.77480625 0.790425h0.89730625c0.808496875 0.02358125 1.469990625 0.298590625 1.981425 0.799309375Zm-1.188240625 2.134546875c-0.01225 -0.293996875 -0.1133125 -0.532871875 -0.3276875 -0.71968125 -0.15925 -0.1868125 -0.428746875 -0.287875 -0.695184375 -0.300125H3.1015125c-0.293690625 0.01225 -0.534403125 0.1133125 -0.72213125 0.300125 -0.1880375 0.186809375 -0.287875 0.425684375 -0.2995125 0.71968125v5.953465625c0 0.28175 0.0998375 0.520621875 0.2995125 0.719684375s0.440384375 0.300121875 0.72213125 0.300121875h9.8106625c0.281746875 0 0.520621875 -0.1010625 0.71355625 -0.300121875 0.1929375 -0.1990625 0.2970625 -0.4379375 0.3093125 -0.719684375V6.217634375Zm-8.094140625 1.30768125c0.1929375 0.1929375 0.2970625 0.431809375 0.3093125 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300125 0.71049375 -0.189871875 0.1929375 -0.428746875 0.2909375 -0.72274375 0.2909375 -0.294 0 -0.535934375 -0.098 -0.722746875 -0.2909375 -0.1868125 -0.192934375 -0.287871875 -0.428746875 -0.300121875 -0.71049375V8.2358125c0.01225 -0.2786875 0.116371875 -0.517559375 0.309309375 -0.710496875 0.1929375 -0.1929375 0.404246875 -0.293996875 0.713559375 -0.306246875 0.281746875 0.01225 0.520621875 0.113309375 0.71355625 0.306246875Zm5.864653125 0c0.192934375 0.1929375 0.297059375 0.431809375 0.309309375 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300121875 0.71049375 -0.1868125 0.1929375 -0.428746875 0.2909375 -0.722746875 0.2909375 -0.293996875 0 -0.532871875 -0.098 -0.72274375 -0.2909375 -0.214375 -0.192934375 -0.287875 -0.428746875 -0.2970625 -0.71049375V8.2358125c0.0091875 -0.2786875 0.1133125 -0.517559375 0.30625 -0.710496875 0.192934375 -0.1929375 0.431809375 -0.293996875 0.71355625 -0.306246875 0.28175 0.01225 0.520621875 0.113309375 0.713559375 0.306246875Z" fill="#000000" stroke-width="0.0313"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/lcx823/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引子从克里斯托弗亚历山大的小径说起">引子：从克里斯托弗·亚历山大的小径说起</a></li>
+    <li><a href="#第一章间接层的艺术万变不离其宗">第一章：间接层的艺术——万变不离其宗</a></li>
+    <li><a href="#第二章适配器adapter与代理proxy-妥协与控制">第二章：适配器（Adapter）与代理（Proxy）—— 妥协与控制</a>
+      <ol>
+        <li><a href="#1-适配器事后的补救">1. 适配器：事后的补救</a></li>
+        <li><a href="#2-代理权力的边界">2. 代理：权力的边界</a></li>
+      </ol>
+    </li>
+    <li><a href="#第三章装饰器decorator-动态的生长">第三章：装饰器（Decorator）—— 动态的生长</a></li>
+    <li><a href="#第四章桥接bridge-维度的正交">第四章：桥接（Bridge）—— 维度的正交</a></li>
+    <li><a href="#第五章方法论如何一眼看穿">第五章：方法论——如何一眼看穿</a></li>
+    <li><a href="#结语从术到道">结语：从“术”到“道”</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A1%A5%E6%8E%A5%E8%A3%85%E9%A5%B0%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/"></a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>这是一篇尝试还原吴军老师《数学之美》与《文明之光》风格的深度教学文章。</p>
+<hr>
+<h1 id="结构的哲学在封装与解耦之间寻找自由">结构的哲学：在封装与解耦之间寻找自由
+</h1><p>—— 深度解析代理、桥接、装饰器与适配器模式</p>
+<h2 id="引子从克里斯托弗亚历山大的小径说起">引子：从克里斯托弗·亚历山大的小径说起
+</h2><p>在加州伯克利分校的校园旁，有一位名叫克里斯托弗·亚历山大（Christopher Alexander）的建筑学教授。他在20世纪70年代做了一件非常有意思的事情。他并没有去设计一座具体的摩天大楼，而是花了数年时间去观察中世纪的城镇、瑞士的农舍以及日本的神社。</p>
+<p>亚历山大发现，无论是几百年前的修道院，还是现代的家庭住宅，虽然它们看起来千差万别，但在解决某些特定的空间问题时，都遵循着某种永恒的结构。比如，如何让光线进入房间，如何处理公共空间与私密空间的过渡。他把这些重复出现的解决方案称为“模式”（Pattern）。</p>
+<p>1977年，他出版了著名的《建筑模式语言》。这本书不仅改变了建筑界，更令人意想不到的是，它在大洋彼岸的计算机科学界引发了一场革命。肯特·贝克（Kent Beck）和沃德·坎宁安（Ward Cunningham）深受启发，随后“四人帮”（GoF）将这一思想引入软件工程，奠定了我们今天所熟知的设计模式的基础。</p>
+<p>这个故事揭示了一个深刻的道理：<strong>模式，本质上是对重复性问题的抽象解决方案。</strong></p>
+<p>在计算机科学的教学中，我发现学生们最容易感到困惑的，往往不是那些极其复杂的算法，而是那些看起来长得“几乎一样”的设计模式。其中，结构型模式中的<strong>代理（Proxy）</strong>、<strong>桥接（Bridge）</strong>、<strong>装饰器（Decorator）<strong>和</strong>适配器（Adapter）</strong>，就是著名的“混淆四重奏”。</p>
+<p>如果你去看它们的代码结构，你会发现它们惊人地相似：都是一个类包含（Wrap）了另一个类，都体现了“组合优于继承”的原则。但是，为什么我们需要四个不同的名字来称呼它们？</p>
+<p>这就像在生物学中，海豚和鲨鱼看起来都有流线型的身体和鳍，但一个是哺乳动物，一个是鱼类。<strong>结构上的相似是趋同进化的结果，而本质的区别在于它们的“基因”——也就是设计的意图。</strong></p>
+<p>这篇文章将带你通过第一性原理，剥开代码的表象，去理解这四种模式背后的数学之美与工程哲学。当你理解了这一点，你就不再是在背诵模式，而是在与设计者的灵魂对话。</p>
+<hr>
+<h2 id="第一章间接层的艺术万变不离其宗">第一章：间接层的艺术——万变不离其宗
+</h2><p>在深入具体的模式之前，我们需要先回到计算机科学的一个基本公理。</p>
+<p>计算机先驱戴维·惠勒（David Wheeler）曾经说过一句名言：“<strong>计算机科学中的所有问题，都可以通过增加一个间接层（Indirection）来解决。</strong>”</p>
+<p>这句话虽然简单，却道出了软件工程的真谛。无论是操作系统管理硬件，还是TCP/IP协议处理网络传输，本质上都是在构建间接层。</p>
+<p>我们今天要讨论的这四个模式，本质上都是“间接层”的不同表现形式。它们都拒绝让客户端直接访问底层对象，而是在中间插入了一个“中间人”。</p>
+<p>想象一下，你手里有一个对象 <code>A</code>。</p>
+<ul>
+<li>如果你想在不改变 <code>A</code> 的接口的前提下，给 <code>A</code> 穿上一层华丽的外衣，这是<strong>装饰器</strong>。</li>
+<li>如果 <code>A</code> 的接口和你的系统不兼容，你需要一个翻译官，这是<strong>适配器</strong>。</li>
+<li>如果 <code>A</code> 太庞大或者太敏感，你需要一个秘书来挡在前面，这是<strong>代理</strong>。</li>
+<li>如果 <code>A</code> 的变化维度太多，你想把它的抽象部分和实现部分拆开，这是<strong>桥接</strong>。</li>
+</ul>
+<p>你看，虽然代码写出来都是 <code>class Wrapper { private Target target; }</code>，但这一行代码背后的<strong>意图（Intent）</strong>，决定了它们在软件架构中的地位。</p>
+<p>这就像数学中的函数 $y = f(x)$。</p>
+<ul>
+<li>有时候 $f(x)$ 是为了修正 $x$ 的单位（适配器）；</li>
+<li>有时候 $f(x)$ 是为了给 $x$ 加上一个常数 $C$（装饰器）；</li>
+<li>有时候 $f(x)$ 是为了限制 $x$ 的定义域（代理）；</li>
+<li>有时候 $f(x)$ 是为了将 $x$ 映射到另一个维度的空间（桥接）。</li>
+</ul>
+<p>接下来，让我们逐一拆解。</p>
+<hr>
+<h2 id="第二章适配器adapter与代理proxy-妥协与控制">第二章：适配器（Adapter）与代理（Proxy）—— 妥协与控制
+</h2><h3 id="1-适配器事后的补救">1. 适配器：事后的补救
+</h3><p>让我们先从最容易理解的<strong>适配器模式</strong>说起。</p>
+<p>在历史上，铁路轨距的不统一曾经是阻碍欧洲经济一体化的巨大障碍。法国的火车开到西班牙边境必须停下来，因为西班牙的铁轨比法国的宽。为了解决这个问题，工程师们设计了变轨系统或者换乘站。这就是物理世界中的适配器。</p>
+<p>在软件开发中，适配器模式通常扮演着“事后诸葛亮”的角色。请注意“事后”这个词。<strong>当你引入适配器时，通常意味着你碰到了两个已经存在的、无法改变的系统，而它们的接口不兼容。</strong></p>
+<p>比如，你的系统期望一个 <code>Target</code> 接口，但你手里只有一个 <code>Adaptee</code> 类。你不能修改 <code>Adaptee</code>（可能是第三方库），也不能修改系统的核心逻辑。这时候，你只能写一个 <code>Adapter</code> 类，实现 <code>Target</code> 接口，并在内部调用 <code>Adaptee</code> 的方法。</p>
+<p>从信息论的角度来看，适配器并没有增加新的信息量，它只是进行了一次<strong>信息的转码（Transcoding）</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 你的系统期望的接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">LightningPort</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">chargeWithLightning</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 现实中只有Type-C的充电器</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">TypeCCharger</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">chargeWithTypeC</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Charging with Type-C&#34;</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 适配器：把Type-C伪装成Lightning</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Adapter</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">LightningPort</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">TypeCCharger</span><span class="w"> </span><span class="n">typeC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Adapter</span><span class="p">(</span><span class="n">TypeCCharger</span><span class="w"> </span><span class="n">typeC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">typeC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">typeC</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">chargeWithLightning</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 核心：接口转换</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">typeC</span><span class="p">.</span><span class="na">chargeWithTypeC</span><span class="p">();</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>吴军视点：</strong> 适配器模式体现了工程中的<strong>妥协哲学</strong>。在理想的数学世界里，所有接口都应该完美匹配；但在现实的工程世界里，由于历史遗留问题（Legacy Code）和标准的不统一，我们必须通过增加熵（代码复杂度）来换取系统的连通性。</p>
+<h3 id="2-代理权力的边界">2. 代理：权力的边界
+</h3><p>如果说适配器是为了“连通”，那么<strong>代理模式</strong>就是为了“控制”。</p>
+<p>让我们回到古代的宫廷。国王（RealSubject）日理万机，不可能亲自接见每一个平民。因此，设立了宰相或内务府（Proxy）。你想见国王，必须先经过宰相。宰相可能会检查你是否带了武器（安全代理），或者告诉你国王正在睡觉，晚点再来（虚拟代理/延迟加载），或者因为你在千里之外，由钦差大臣代表国王行事（远程代理）。</p>
+<p>代理模式的核心在于：<strong>代理类和真实类的接口是一模一样的。</strong> 客户端甚至不知道自己在这个过程中是在和代理打交道。</p>
+<p>这在计算机系统中应用极广。比如，当你访问一个网页时，你可能真正访问的是CDN（内容分发网络）的边缘节点，而不是源服务器。这个边缘节点就是一个缓存代理。它减少了源站的负载，提高了响应速度。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Image</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">RealImage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">RealImage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">fileName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">loadFromDisk</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// 耗时操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Displaying image&#34;</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">ProxyImage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">RealImage</span><span class="w"> </span><span class="n">realImage</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">fileName</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ProxyImage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">fileName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">fileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileName</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 核心：控制访问（延迟加载）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">realImage</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">realImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RealImage</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">realImage</span><span class="p">.</span><span class="na">display</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>吴军视点：</strong> 代理模式体现了**关注点分离（Separation of Concerns）**的思想。业务逻辑类（RealSubject）应该只关注业务本身，而像权限控制、日志记录、事务管理、网络通信这些“非功能性需求”，应该剥离出去交给代理处理。这在Spring框架的AOP（面向切面编程）中体现得淋漓尽致。</p>
+<hr>
+<h2 id="第三章装饰器decorator-动态的生长">第三章：装饰器（Decorator）—— 动态的生长
+</h2><p>现在，我们进入一个更有趣的领域：如何让对象“生长”。</p>
+<p>在生物进化中，如果一个物种想要获得新的能力，比如长出翅膀，通常需要经过漫长的基因突变和自然选择（对应软件中的<strong>继承</strong>）。但在人类社会中，我们想飞，不需要基因突变，只需要穿上滑翔翼；想潜水，只需要穿上潜水服。</p>
+<p><strong>装饰器模式，就是软件世界里的“穿衣法则”。</strong></p>
+<p>传统的面向对象教学中，如果我们要扩展一个类的功能，老师通常会教你使用继承。比如有一个 <code>Coffee</code> 类，你想加牛奶，就写一个 <code>MilkCoffee</code> 子类；想加糖，就写一个 <code>SugarCoffee</code> 子类。</p>
+<p>但是，如果你既想加牛奶，又想加糖，还想加冰块呢？如果你有10种配料，排列组合产生子类数量将是阶乘级的。这在数学上被称为<strong>类爆炸（Class Explosion）</strong>。</p>
+<p>装饰器模式通过组合解决了这个问题。它允许你动态地将责任附加到对象上。装饰器和被装饰的对象实现相同的接口，这使得装饰器可以层层嵌套，像俄罗斯套娃一样。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 基础接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Coffee</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">getCost</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">getDescription</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 具体的咖啡</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">SimpleCoffee</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Coffee</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getCost</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">10</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getDescription</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Simple Coffee&#34;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 装饰器基类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CoffeeDecorator</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Coffee</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Coffee</span><span class="w"> </span><span class="n">decoratedCoffee</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CoffeeDecorator</span><span class="p">(</span><span class="n">Coffee</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">decoratedCoffee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getCost</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">decoratedCoffee</span><span class="p">.</span><span class="na">getCost</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getDescription</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">decoratedCoffee</span><span class="p">.</span><span class="na">getDescription</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 具体的装饰（加牛奶）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">WithMilk</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">CoffeeDecorator</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">WithMilk</span><span class="p">(</span><span class="n">Coffee</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kd">super</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getCost</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">getCost</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// 增强功能</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getDescription</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">getDescription</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, Milk&#34;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用时，你可以写 <code>new WithSugar(new WithMilk(new SimpleCoffee()))</code>。你看，我们不需要创建一个 <code>SugarMilkCoffee</code> 类，而是通过运行时组合实现了功能的增强。</p>
+<p><strong>吴军视点：</strong> 装饰器模式是对<strong>继承机制的一种反思与补充</strong>。继承是静态的、编译时的、强耦合的；而装饰器是动态的、运行时的、灵活的。它告诉我们，功能的扩展不一定非要通过改变物种（类）的定义来实现，可以通过外部工具（装饰器）的叠加来完成。这是从“改变基因”到“使用工具”的进化。</p>
+<hr>
+<h2 id="第四章桥接bridge-维度的正交">第四章：桥接（Bridge）—— 维度的正交
+</h2><p>最后，我们来挑战最难理解，也最具数学美感的模式——<strong>桥接模式</strong>。</p>
+<p>在《数学之美》中，我常提到**正交性（Orthogonality）**的概念。如果两个向量是正交的（垂直的），它们就可以互不干扰地独立变化，而它们的组合可以张成一个巨大的空间。</p>
+<p>桥接模式就是为了解决<strong>多维度变化</strong>的问题。</p>
+<p>想象你要开发一个跨平台的图形库。你需要支持不同的<strong>形状</strong>（圆形、方形），同时需要支持不同的<strong>操作系统</strong>（Windows、Mac、Linux）。</p>
+<p>如果使用继承：</p>
+<ul>
+<li>WindowsCircle</li>
+<li>MacCircle</li>
+<li>LinuxCircle</li>
+<li>WindowsSquare</li>
+<li>MacSquare</li>
+<li>LinuxSquare
+&hellip;</li>
+</ul>
+<p>如果你有 $M$ 种形状和 $N$ 种操作系统，你需要定义的类是 $M \times N$ 个。这是一个乘法关系。每增加一个新的操作系统，你需要为每种形状都增加一个子类。这是极其糟糕的设计。</p>
+<p>桥接模式的智慧在于：<strong>将抽象部分与实现部分分离，使它们都可以独立地变化。</strong></p>
+<p>它建议你不要把“操作系统”硬编码在“形状”里。相反，你应该定义一个 <code>Shape</code> 抽象类和一个 <code>DrawAPI</code> 接口。<code>Shape</code> 持有 <code>DrawAPI</code> 的引用。</p>
+<ul>
+<li><strong>抽象维度</strong>：<code>Shape</code> (Circle, Square)</li>
+<li><strong>实现维度</strong>：<code>DrawAPI</code> (WindowsImpl, MacImpl)</li>
+</ul>
+<p>现在，你只需要 $M$ 个形状类和 $N$ 个实现类。总类数变成了 $M + N$。从乘法变成了加法，这是复杂度的巨大降低。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 实现维度：画图API</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">DrawAPI</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">drawCircle</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">radius</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 具体实现</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">WindowsDrawAPI</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">DrawAPI</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MacDrawAPI</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">DrawAPI</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 抽象维度：形状</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Shape</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">DrawAPI</span><span class="w"> </span><span class="n">drawAPI</span><span class="p">;</span><span class="w"> </span><span class="c1">// 桥梁：持有实现部分的引用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="nf">Shape</span><span class="p">(</span><span class="n">DrawAPI</span><span class="w"> </span><span class="n">drawAPI</span><span class="p">){</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">drawAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drawAPI</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 具体形状</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Circle</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Shape</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Circle</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">radius</span><span class="p">,</span><span class="w"> </span><span class="n">DrawAPI</span><span class="w"> </span><span class="n">drawAPI</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kd">super</span><span class="p">(</span><span class="n">drawAPI</span><span class="p">);</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">drawAPI</span><span class="p">.</span><span class="na">drawCircle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">radius</span><span class="p">);</span><span class="w"> </span><span class="c1">// 委托给桥梁另一端</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>吴军视点：</strong> 桥接模式体现了<strong>笛卡尔坐标系</strong>的思想。笛卡尔将几何问题分解为 X 轴和 Y 轴，使得我们可以分别处理不同维度的问题。桥接模式将一个复杂的类拆分为两个独立的继承体系，并通过组合（桥）将它们连接起来。这种**解耦（Decoupling）**的能力，是构建大型可维护系统的基石。</p>
+<hr>
+<h2 id="第五章方法论如何一眼看穿">第五章：方法论——如何一眼看穿
+</h2><p>讲了这么多，我们来做一个总结性的对比。这四个模式虽然结构相似，但我们可以通过几个核心问题来区分它们：</p>
+<ol>
+<li>
+<p><strong>关于“时间点”：</strong></p>
+<ul>
+<li><strong>适配器</strong>通常用于<strong>后期</strong>，当两个已存系统不兼容时。它是亡羊补牢。</li>
+<li><strong>桥接</strong>通常用于<strong>前期</strong>设计，当你预见到系统会有多个维度的变化时。它是未雨绸缪。</li>
+</ul>
+</li>
+<li>
+<p><strong>关于“接口”：</strong></p>
+<ul>
+<li><strong>适配器</strong>改变了接口（从 <code>Type-C</code> 变成 <code>Lightning</code>）。</li>
+<li><strong>代理</strong>和<strong>装饰器</strong>保持接口不变。</li>
+</ul>
+</li>
+<li>
+<p><strong>关于“功能”：</strong></p>
+<ul>
+<li><strong>代理</strong>通常不改变核心功能，而是控制访问（做减法或做外围工作）。</li>
+<li><strong>装饰器</strong>是为了增强功能，添加新的行为（做加法）。</li>
+<li><strong>桥接</strong>是为了分离抽象和实现，避免类爆炸（做除法/解耦）。</li>
+</ul>
+</li>
+</ol>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">模式</th>
+          <th style="text-align: left">核心意图</th>
+          <th style="text-align: left">形象比喻</th>
+          <th style="text-align: left">接口变化</th>
+          <th style="text-align: left">数学关系</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>适配器</strong></td>
+          <td style="text-align: left">转换接口，复用旧类</td>
+          <td style="text-align: left">变压器/翻译官</td>
+          <td style="text-align: left">改变</td>
+          <td style="text-align: left">$A \to B$ (映射)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>装饰器</strong></td>
+          <td style="text-align: left">动态增强功能</td>
+          <td style="text-align: left">穿衣/化妆</td>
+          <td style="text-align: left">不变</td>
+          <td style="text-align: left">$A \to A+$ (叠加)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>代理</strong></td>
+          <td style="text-align: left">控制访问，解耦业务</td>
+          <td style="text-align: left">秘书/防火墙</td>
+          <td style="text-align: left">不变</td>
+          <td style="text-align: left">$A \to A_{secure}$ (过滤)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>桥接</strong></td>
+          <td style="text-align: left">分离维度，独立变化</td>
+          <td style="text-align: left">坐标系/乐高</td>
+          <td style="text-align: left">不变(内部解耦)</td>
+          <td style="text-align: left">$M \times N \to M + N$ (降维)</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="结语从术到道">结语：从“术”到“道”
+</h2><p>在《数学之美》中，我一直强调，技术是不断变化的，但背后的数学原理和思维方式是永恒的。</p>
+<p>学习设计模式，最大的误区就是死记硬背类图。如果你只是记住了“代理模式有一个 Proxy 类”，那你只学到了“术”。</p>
+<p>当你理解了：</p>
+<ul>
+<li><strong>适配器</strong>是对现实世界不完美的<strong>包容</strong>；</li>
+<li><strong>装饰器</strong>是对静态分类体系的<strong>突破</strong>；</li>
+<li><strong>代理</strong>是对复杂系统中权责边界的<strong>划分</strong>；</li>
+<li><strong>桥接</strong>是对多维空间复杂度的<strong>降维打击</strong>；</li>
+</ul>
+<p>这时，你就悟到了“道”。</p>
+<p>这些模式不仅仅是写代码的技巧，它们也是处理复杂系统、甚至处理人生问题的智慧。</p>
+<ul>
+<li>当我们遇到沟通障碍时，我们要学会做“适配器”；</li>
+<li>当我们想要提升自我时，我们要学会像“装饰器”一样不断学习新技能，而不是抱怨出身（继承）；</li>
+<li>当我们精力有限时，我们要学会建立“代理”机制，过滤掉无效信息；</li>
+<li>当我们面临复杂局面时，我们要学会像“桥接”一样拆解问题，找到正交的维度，各个击破。</li>
+</ul>
+<p>希望这篇文章能帮你打破代码表象的迷雾，看到结构背后那简洁而深刻的逻辑之美。</p>
+<p>愿你在编程的道路上，不仅能写出运行无误的代码，更能设计出优雅、富有智慧的架构。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 yyy&#39;s blog
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/lcx823/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

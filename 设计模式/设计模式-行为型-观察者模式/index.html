@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是一个关于 “连接与解耦” 的故事。\n在计算机科学的浩瀚星空中，设计模式并非凭空产生的代码技巧，它们是人类在管理复杂性时沉淀下来的智慧结晶。今天，我们要聊的是其中最优雅、也最无处不在的一种模式——观察者模式（Observer Pattern）。\n">
+<title></title>
+
+<link rel='canonical' href='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/'>
+
+<link rel="stylesheet" href="/lcx823/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="">
+<meta property='og:description' content="这是一个关于 “连接与解耦” 的故事。\n在计算机科学的浩瀚星空中，设计模式并非凭空产生的代码技巧，它们是人类在管理复杂性时沉淀下来的智慧结晶。今天，我们要聊的是其中最优雅、也最无处不在的一种模式——观察者模式（Observer Pattern）。\n">
+<meta property='og:url' content='https://lcx823.github.io/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/'>
+<meta property='og:site_name' content='yyy'>
+<meta property='og:type' content='article'><meta property='article:section' content='设计模式' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="这是一个关于 “连接与解耦” 的故事。\n在计算机科学的浩瀚星空中，设计模式并非凭空产生的代码技巧，它们是人类在管理复杂性时沉淀下来的智慧结晶。今天，我们要聊的是其中最优雅、也最无处不在的一种模式——观察者模式（Observer Pattern）。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/lcx823/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/lcx823/img/avatar_hu_bdf33bd95d7d61a2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😉</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/lcx823">yyy</a></h1>
+            <h2 class="site-description">演示说明</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/3494362409339008'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="Bilibili--Streamline-Font-Awesome" height="16" width="16"><desc>Bilibili Streamline Icon: https://streamlinehq.com</desc><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M15.123284375 4.0830875c0.511434375 0.55430625 0.747246875 1.215803125 0.713559375 2.01205v6.1984625c-0.01225 0.80849375 -0.28175 1.473053125 -0.811559375 1.993675 -0.526746875 0.520621875 -1.197428125 0.79318125 -2.005925 0.81768125H2.978096875c-0.810028125 -0.0245 -1.476425 -0.300121875 -1.999190625 -0.83299375C0.456509375 13.739090625 0.18348125 13.03778125 0.16 12.1711V6.0951375c0.02348125 -0.796246875 0.296509375 -1.45774375 0.81890625 -2.01205 0.522765625 -0.50071875 1.1891625 -0.775728125 1.999190625 -0.799309375h0.89975625L3.1015125 2.493353125c-0.176090625 -0.17548125 -0.264290625 -0.398125 -0.264290625 -0.667315625 0 -0.2695 0.0882 -0.491834375 0.264290625 -0.667528125 0.17609375 -0.175634375 0.39965625 -0.263465625 0.669153125 -0.263465625s0.493059375 0.08783125 0.670684375 0.263465625l2.2448 2.12526875h2.69498125l2.28155 -2.12526875c0.1868125 -0.175634375 0.416496875 -0.263465625 0.685996875 -0.263465625 0.269496875 0 0.493059375 0.08783125 0.67068125 0.263465625 0.1745625 0.17569375 0.263375 0.398028125 0.263375 0.667528125 0 0.269190625 -0.0888125 0.491834375 -0.263375 0.667315625l-0.77480625 0.790425h0.89730625c0.808496875 0.02358125 1.469990625 0.298590625 1.981425 0.799309375Zm-1.188240625 2.134546875c-0.01225 -0.293996875 -0.1133125 -0.532871875 -0.3276875 -0.71968125 -0.15925 -0.1868125 -0.428746875 -0.287875 -0.695184375 -0.300125H3.1015125c-0.293690625 0.01225 -0.534403125 0.1133125 -0.72213125 0.300125 -0.1880375 0.186809375 -0.287875 0.425684375 -0.2995125 0.71968125v5.953465625c0 0.28175 0.0998375 0.520621875 0.2995125 0.719684375s0.440384375 0.300121875 0.72213125 0.300121875h9.8106625c0.281746875 0 0.520621875 -0.1010625 0.71355625 -0.300121875 0.1929375 -0.1990625 0.2970625 -0.4379375 0.3093125 -0.719684375V6.217634375Zm-8.094140625 1.30768125c0.1929375 0.1929375 0.2970625 0.431809375 0.3093125 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300125 0.71049375 -0.189871875 0.1929375 -0.428746875 0.2909375 -0.72274375 0.2909375 -0.294 0 -0.535934375 -0.098 -0.722746875 -0.2909375 -0.1868125 -0.192934375 -0.287871875 -0.428746875 -0.300121875 -0.71049375V8.2358125c0.01225 -0.2786875 0.116371875 -0.517559375 0.309309375 -0.710496875 0.1929375 -0.1929375 0.404246875 -0.293996875 0.713559375 -0.306246875 0.281746875 0.01225 0.520621875 0.113309375 0.71355625 0.306246875Zm5.864653125 0c0.192934375 0.1929375 0.297059375 0.431809375 0.309309375 0.710496875v1.01980625c-0.01225 0.281746875 -0.1133125 0.517559375 -0.300121875 0.71049375 -0.1868125 0.1929375 -0.428746875 0.2909375 -0.722746875 0.2909375 -0.293996875 0 -0.532871875 -0.098 -0.72274375 -0.2909375 -0.214375 -0.192934375 -0.287875 -0.428746875 -0.2970625 -0.71049375V8.2358125c0.0091875 -0.2786875 0.1133125 -0.517559375 0.30625 -0.710496875 0.192934375 -0.1929375 0.431809375 -0.293996875 0.71355625 -0.306246875 0.28175 0.01225 0.520621875 0.113309375 0.713559375 0.306246875Z" fill="#000000" stroke-width="0.0313"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/lcx823/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/lcx823/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引子信息的传递与不对称">引子：信息的传递与不对称</a></li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#11-忙碌的傻瓜">1.1 忙碌的傻瓜</a></li>
+        <li><a href="#12-紧耦合的泥潭">1.2 紧耦合的泥潭</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#21-定义接口建立契约">2.1 定义接口：建立契约</a></li>
+        <li><a href="#22-实现核心逻辑">2.2 实现核心逻辑</a></li>
+        <li><a href="#23-观察者的实现">2.3 观察者的实现</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#31-推模型push-vs-拉模型pull">3.1 推模型（Push） vs 拉模型（Pull）</a></li>
+        <li><a href="#32-内存泄漏的幽灵the-lapsed-listener-problem">3.2 内存泄漏的幽灵（The Lapsed Listener Problem）</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#41-mvc-架构的灵魂">4.1 MVC 架构的灵魂</a></li>
+        <li><a href="#42-事件驱动架构eda">4.2 事件驱动架构（EDA）</a></li>
+        <li><a href="#43-响应式编程reactive-programming">4.3 响应式编程（Reactive Programming）</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/lcx823/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"></a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>这是一个关于 <strong>“连接与解耦”</strong>  的故事。</p>
+<p>在计算机科学的浩瀚星空中，设计模式并非凭空产生的代码技巧，它们是人类在管理复杂性时沉淀下来的智慧结晶。今天，我们要聊的是其中最优雅、也最无处不在的一种模式——<strong>观察者模式（Observer Pattern）</strong>。</p>
+<p>为了讲清楚它，我们不仅要看代码，还要看历史，看通信的本质，甚至要看一看人类社会是如何运作的。</p>
+<hr>
+<h1 id="秩序之美从烽火台到观察者模式">秩序之美：从烽火台到观察者模式
+</h1><h2 id="引子信息的传递与不对称">引子：信息的传递与不对称
+</h2><p>如果大家去过长城，一定会被那些屹立在山脊上的烽火台所震撼。在两千多年前的秦汉时期，那是世界上最高效的信息传递网络之一。</p>
+<p>试想这样一个场景：边境的守军发现敌袭（事件发生），点燃狼烟（发布消息）。几十里外的下一座烽火台看到烟雾（接收通知），紧接着也点燃狼烟。就这样，信息以每小时数百公里的速度传回京师。</p>
+<p>这个古老的故事里，隐藏着通信模型中最核心的两个要素：<strong>“变化”<strong>与</strong>“响应”</strong>。</p>
+<p>然而，烽火台系统有一个巨大的局限性：它是一种“广播”系统，且信息量极低（通常只有“有敌情”和“无敌情”两种状态）。更重要的是，它要求所有观察者必须时刻盯着远方——这在计算机术语中，叫做**“忙轮询”（Busy Waiting）**。</p>
+<p>让我们把时间轴拉近到17世纪。1605年，约翰·卡洛勒斯（Johann Carolus）在斯特拉斯堡发行了世界上第一份印刷报纸《所有值得尊敬和值得纪念的新闻》。这一刻，人类的信息传播方式发生了一次质的飞跃。</p>
+<p>在这个模型中，市民不再需要每天跑到广场上去问：“今天发生什么了吗？”（轮询），而是订阅了报纸。当新闻发生时，报社（发布者）会将报纸送到市民（订阅者）手中。</p>
+<p><strong>这个故事揭示了什么？</strong></p>
+<p>它揭示了从“主动拉取（Pull）”到“被动推送（Push）”的思维转变。这种转变，正是为了解决信息不对称带来的效率问题。</p>
+<p>在软件开发中，我们面临着同样的挑战：一个对象（比如天气数据）发生了变化，如何通知其他依赖它的对象（比如仪表盘、手机APP），而又不需要让它们紧紧地纠缠在一起？</p>
+<p>这篇文章将讲述观察者模式的前世今生。当你理解了观察者模式，你就不只学会了一种写代码的套路，你更理解了现代软件架构中“解耦”与“事件驱动”的灵魂。</p>
+<hr>
+<h1 id="第一章轮询的代价为什么我们需要观察">第一章：轮询的代价——为什么我们需要“观察”？
+</h1><p>在深入模式之前，我们必须先回到原点，问一个“为什么”。为什么我们不能直接去问？</p>
+<h3 id="11-忙碌的傻瓜">1.1 忙碌的傻瓜
+</h3><p>假设我们正在开发一个气象监测系统。我们有一个核心类 <code>WeatherData</code>（气象数据），它负责从物理传感器获取温度、湿度和气压。我们还有三个显示终端：<code>CurrentConditionsDisplay</code>（实时布告板）、<code>StatisticsDisplay</code>（统计布告板）和 <code>ForecastDisplay</code>（预测布告板）。</p>
+<p>最直观、最符合人类线性思维的做法是这样的：</p>
+<p>显示终端每隔一秒钟，就去调用一次 <code>WeatherData</code> 的 <code>getTemperature()</code> 方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 伪代码：显示终端的逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weatherData</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">updateDisplay</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="n">1000</span><span class="p">);</span><span class="w"> </span><span class="c1">// 休息一秒</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种做法在计算机科学中被称为<strong>轮询（Polling）</strong>。虽然它逻辑简单，但在一位追求完美的工程师眼中，这是极其丑陋的。</p>
+<p><strong>为什么丑陋？</strong></p>
+<p>首先，这违背了<strong>香农（Claude Shannon）的信息论</strong>。香农认为，信息的本质是消除不确定性。如果气温在这一小时内没有变化，那么这一小时内几千次的询问，获得的信息量为<strong>零</strong>。</p>
+<p>其次，这是对计算资源的极大浪费。CPU不得不从原本的任务中抽离出来，去执行这些毫无意义的检查。这就像你为了等一个快递，每隔一分钟就打开门看看快递员来了没有。你的焦虑并不能加速快递的到达，只会让你无法专心工作。</p>
+<h3 id="12-紧耦合的泥潭">1.2 紧耦合的泥潭
+</h3><p>既然轮询不好，那换个思路：让 <code>WeatherData</code> 在数据更新时，直接调用显示终端的方法不就行了吗？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WeatherData</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... 实例变量 ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">measurementsChanged</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getTemperature</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getHumidity</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">pressure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getPressure</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 直接调用具体的显示端</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">currentConditionsDisplay</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">statisticsDisplay</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">forecastDisplay</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这段代码看起来解决了效率问题，但它引入了一个更可怕的恶魔：<strong>紧耦合（Tight Coupling）</strong>。</p>
+<p>大家可以想象一下，如果现在产品经理跑来说：“我们需要增加一个‘手机APP显示端’。”</p>
+<p>你需要做什么？你需要打开 <code>WeatherData</code> 的源代码，修改它的 <code>measurementsChanged</code> 方法，加上一行新的调用代码。</p>
+<p>**开闭原则（Open-Closed Principle）**告诉我们：软件实体应该对扩展开放，对修改关闭。每增加一个观察者就要修改核心代码，这简直是维护者的噩梦。如果 <code>WeatherData</code> 是第三方提供的闭源库怎么办？你根本改不了。</p>
+<p>所以，我们需要一种机制，既能像“报纸订阅”那样高效（推模式），又能像“USB接口”那样灵活（解耦）。</p>
+<p>这就是观察者模式登场的时刻。</p>
+<hr>
+<h1 id="第二章契约精神观察者模式的核心机制">第二章：契约精神——观察者模式的核心机制
+</h1><p>吴军老师常说，好的计算机架构，往往模拟的是高效的社会组织结构。观察者模式，模拟的就是**“出版者-订阅者”**的关系。</p>
+<h3 id="21-定义接口建立契约">2.1 定义接口：建立契约
+</h3><p>要实现解耦，核心在于**“面向接口编程，而不是面向实现编程”**。</p>
+<p>我们需要定义两个角色：</p>
+<ol>
+<li><strong>Subject（主题/被观察者）</strong>：也就是报社。它不仅持有数据，还维护着一份“订阅者名单”。</li>
+<li><strong>Observer（观察者）</strong>：也就是读者。它们必须拥有一个统一的“接收通知”的入口。</li>
+</ol>
+<p>让我们用 Java 语言来描述这份“契约”：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 观察者接口：所有的读者必须实现这个接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Observer</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 当主题状态改变时，会调用这个方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 主题接口：报社必须具备的功能</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Subject</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerObserver</span><span class="p">(</span><span class="n">Observer</span><span class="w"> </span><span class="n">o</span><span class="p">);</span><span class="w"> </span><span class="c1">// 订阅</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">removeObserver</span><span class="p">(</span><span class="n">Observer</span><span class="w"> </span><span class="n">o</span><span class="p">);</span><span class="w">   </span><span class="c1">// 取消订阅</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">notifyObservers</span><span class="p">();</span><span class="w">            </span><span class="c1">// 发送通知</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，这里的 <code>Subject</code> 根本不在乎它通知的是谁。是布告板？是手机？还是一个记录日志的机器人？它不在乎。它只知道，对方是一个实现了 <code>Observer</code> 接口的物体。</p>
+<p>这就是<strong>多态</strong>的魅力，也是解耦的关键。</p>
+<h3 id="22-实现核心逻辑">2.2 实现核心逻辑
+</h3><p>接下来，我们改造 <code>WeatherData</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WeatherData</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Subject</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Observer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">observers</span><span class="p">;</span><span class="w"> </span><span class="c1">// 订阅者名单</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pressure</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">WeatherData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">observers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 任何人只要实现了Observer接口，都可以来注册</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerObserver</span><span class="p">(</span><span class="n">Observer</span><span class="w"> </span><span class="n">o</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">observers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">o</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">removeObserver</span><span class="p">(</span><span class="n">Observer</span><span class="w"> </span><span class="n">o</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">observers</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="n">o</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">observers</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 核心方法：循环遍历名单，逐个通知</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">notifyObservers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Observer</span><span class="w"> </span><span class="n">observer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">observers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">observer</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 当从传感器获取新数据时调用此方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMeasurements</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pressure</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">humidity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">humidity</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">pressure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pressure</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">measurementsChanged</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">measurementsChanged</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">notifyObservers</span><span class="p">();</span><span class="w"> </span><span class="c1">// 仅仅是通知，不再依赖具体类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-观察者的实现">2.3 观察者的实现
+</h3><p>现在，具体的显示板只需要实现 <code>Observer</code> 接口，并在初始化时把自己“注册”给 <code>WeatherData</code> 即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CurrentConditionsDisplay</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Observer</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Subject</span><span class="w"> </span><span class="n">weatherData</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CurrentConditionsDisplay</span><span class="p">(</span><span class="n">Subject</span><span class="w"> </span><span class="n">weatherData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">weatherData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weatherData</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">weatherData</span><span class="p">.</span><span class="na">registerObserver</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"> </span><span class="c1">// 主动订阅</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">humidity</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pressure</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">humidity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">humidity</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">display</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;当前状况: 温度 &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;F, 湿度 &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">humidity</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;%&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>看，世界变得清净了。<code>WeatherData</code> 不需要知道 <code>CurrentConditionsDisplay</code> 的存在，它只需要对着那张 <code>List&lt;Observer&gt;</code> 名单喊话即可。这种设计在系统扩展性上带来了巨大的优势。</p>
+<hr>
+<h1 id="第三章推与拉的博弈难点与权衡">第三章：推与拉的博弈——难点与权衡
+</h1><p>如果说学会上面的代码就算掌握了观察者模式，那只是停留在了“术”的层面。在实际工程中，情况往往要复杂得多。</p>
+<h3 id="31-推模型push-vs-拉模型pull">3.1 推模型（Push） vs 拉模型（Pull）
+</h3><p>在上面的例子中，<code>update(float temp, float humidity, float pressure)</code> 方法直接把所有数据都塞给了观察者。这被称为**“推模型”**。</p>
+<p>这就像报社不管你爱不爱看体育版，把整份报纸都塞进你家信箱。</p>
+<p><strong>推模型的优点</strong>是：观察者不需要再回头去查询主题，效率高。
+<strong>缺点</strong>是：如果以后 <code>WeatherData</code> 新增了一个参数（比如“风速”），我们就必须修改 <code>Observer</code> 接口的 <code>update</code> 方法签名，这会导致所有实现了该接口的类都要修改。这又违背了开闭原则。</p>
+<p>另一种选择是**“拉模型”**。</p>
+<p>在拉模型中，<code>Subject</code> 只通知观察者：“嘿，我变了！”。观察者收到通知后，通过 <code>Subject</code> 提供的 Getter 方法，按需获取自己想要的数据。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 拉模型的 Observer 接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Observer</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">Subject</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w"> </span><span class="c1">// 只传递主题的引用，或者甚至不传参</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 具体的观察者实现</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">Subject</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">WeatherData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">WeatherData</span><span class="w"> </span><span class="n">wd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">WeatherData</span><span class="p">)</span><span class="n">s</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wd</span><span class="p">.</span><span class="na">getTemperature</span><span class="p">();</span><span class="w"> </span><span class="c1">// 主动去拉取需要的数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">display</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>拉模型的优点</strong>是：接口非常稳定，扩展性极强。
+<strong>缺点</strong>是：观察者和主题的耦合度稍微变高了一些（观察者需要知道具体的主题类型），且需要多次调用 Getter 方法。</p>
+<p>在现代开发中，<strong>拉模型</strong>通常更受欢迎，因为它更符合复杂系统的演进规律。Java 内置的 <code>java.util.Observer</code>（虽然已过时，但思想犹在）就支持这种模式。</p>
+<h3 id="32-内存泄漏的幽灵the-lapsed-listener-problem">3.2 内存泄漏的幽灵（The Lapsed Listener Problem）
+</h3><p>这是观察者模式最阴暗的角落，也是无数初级工程师踩过的坑。</p>
+<p>想象一下，你创建了一个生命周期很短的观察者对象（比如一个弹出的对话框），它订阅了一个生命周期很长的主题（比如全局配置管理器）。当用户关闭对话框时，你以为它会被垃圾回收（GC）吗？</p>
+<p><strong>不会。</strong></p>
+<p>因为主题的 <code>observers</code> 列表中还持有对该对话框的引用！只要主题还活着，垃圾回收器就不敢回收这个对话框。这就是著名的**“失效监听器问题”（Lapsed Listener Problem）**。随着时间推移，内存中堆积了大量已经“死去”但无法回收的观察者，最终导致内存溢出（OOM）。</p>
+<p><strong>怎么解决？</strong></p>
+<ol>
+<li><strong>显式注销</strong>：在观察者销毁前，务必调用 <code>removeObserver</code>。</li>
+<li><strong>弱引用（Weak Reference）</strong>：这是更高级的解法。让主题持有的列表是“弱引用列表”。如果一个对象只被弱引用指向，GC 会毫不留情地回收它。</li>
+</ol>
+<p>计算机科学不仅是关于如何构建结构，更是关于如何优雅地拆除结构。</p>
+<hr>
+<h1 id="第四章从模式到架构观察者模式的现代演变">第四章：从模式到架构——观察者模式的现代演变
+</h1><p>当我们把视线从单一的代码文件移开，投向更宏大的系统架构时，会发现观察者模式无处不在。它已经进化成了各种形态，支撑着现代互联网的运转。</p>
+<h3 id="41-mvc-架构的灵魂">4.1 MVC 架构的灵魂
+</h3><p>大家熟悉的 <strong>MVC（Model-View-Controller）</strong> 架构，其核心纽带就是观察者模式。</p>
+<ul>
+<li><strong>Model（模型）</strong> 就是 Subject，它持有数据。</li>
+<li><strong>View（视图）</strong> 就是 Observer，它展示数据。</li>
+</ul>
+<p>当 Model 中的数据发生变化时，它触发通知，所有的 View 自动刷新。这就是为什么你在 Excel 的单元格里改了一个数字，相关的柱状图、饼图会瞬间自动变化的原因。没有观察者模式，GUI 编程将是一团乱麻。</p>
+<h3 id="42-事件驱动架构eda">4.2 事件驱动架构（EDA）
+</h3><p>随着分布式系统的兴起，观察者模式跨越了进程的边界，演化为<strong>发布/订阅（Pub/Sub）系统</strong>。</p>
+<p>像 <strong>Kafka、RabbitMQ、Redis Pub/Sub</strong> 这样的中间件，本质上就是巨大的、分布式的 Subject。</p>
+<ul>
+<li><strong>Producer</strong> 发布消息到 Topic（主题）。</li>
+<li><strong>Consumer</strong> 订阅 Topic。</li>
+</ul>
+<p>Producer 和 Consumer 甚至不知道对方的存在，它们可能运行在地球两端的不同服务器上，由不同的语言编写。这种<strong>彻底的解耦</strong>，是微服务架构能够成立的基石。</p>
+<h3 id="43-响应式编程reactive-programming">4.3 响应式编程（Reactive Programming）
+</h3><p>近年来，前端的 React.js、后端的 RxJava、RxJS 变得异常火爆。所谓“响应式”，其实就是<strong>观察者模式 + 迭代器模式 + 函数式编程</strong>的超级合体。</p>
+<p>在这种范式下，一切皆是“流（Stream）”。鼠标点击是流，网络请求是流，变量变化也是流。开发者不再编写“执行步骤”，而是定义“数据流向”。这是一种更高维度的观察者模式应用，它将异步处理的复杂性封装在了优雅的声明式代码中。</p>
+<hr>
+<h1 id="结语在变化中寻找不变">结语：在变化中寻找不变
+</h1><p>如果我们回顾计算机科学的发展史，会发现一个有趣的趋势：<strong>我们总是在试图让系统变得更加“懒惰”。</strong></p>
+<p>从轮询（每时每刻都在问）到中断（有事叫我），从硬编码调用到观察者模式（注册后等通知），从同步阻塞到异步回调。每一次进步，都是为了减少不必要的等待，减少不必要的耦合，让计算资源集中在真正有价值的事情上。</p>
+<p>观察者模式的伟大之处，在于它承认了**“变化”**的永恒性。</p>
+<p>它不试图控制变化，而是建立了一套机制来<strong>应对</strong>变化。它告诉我们：当世界变得复杂时，不要试图把所有东西都绑在一起，而要学会放手，学会建立松散的连接。</p>
+<p>对于正在学习计算机科学的你们来说，掌握代码怎么写只是第一步。</p>
+<p>我希望你们在未来的设计中，当遇到“A变化了，B需要知道”这样的场景时，脑海中浮现的不仅仅是 <code>notifyObservers()</code> 这行代码，还有那种烽火台上传递信息的紧迫感，报纸订阅系统中的秩序感，以及那份在复杂系统中追求“低耦合”的哲学美感。</p>
+<p><strong>真正的技术之美，往往就隐藏在这些看似简单的模式背后。</strong></p>
+<p>当你能够灵活运用观察者模式，处理好推与拉的平衡，规避掉内存泄漏的陷阱，并将其思想迁移到分布式架构中时，你就不仅仅是一个代码的搬运工，而是一个系统的架构师了。</p>
+<p>愿你们在代码的世界里，不仅看到逻辑，更能看到智慧。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 yyy&#39;s blog
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/lcx823/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
